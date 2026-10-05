@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Aisha Handmade Flowers — Design Your Own Bouquet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Fraunces", "Georgia", "serif"],
+              sans: ["DM Sans", "system-ui", "sans-serif"],
+            },
+            colors: {
+              rose: {
+                50: "#fff4f7",
+                100: "#ffe4ec",
+                200: "#ffc9d9",
+                500: "#d6457b",
+                600: "#b92f64",
+                800: "#5e1631",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      body {
+        background: #fff4f7;
+        color: #3a1424;
+      }
+      .opt {
+        transition: all 0.15s;
+      }
+      .opt:has(input:checked) {
+        border-color: #d6457b;
+        background: #ffe4ec;
+        box-shadow: 0 0 0 2px #d6457b33;
+      }
+      .opt:has(input:disabled) {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .opt:focus-within {
+        outline: 2px solid #5e1631;
+        outline-offset: 2px;
+      }
+      #bouquet svg {
+        filter: drop-shadow(0 18px 24px rgba(94, 22, 49, 0.22));
+      }
+      .petal-in {
+        animation: pop 0.35s ease-out;
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+      @keyframes pop {
+        from {
+          transform: scale(0.6);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .petal-in {
+          animation: none;
+        }
+      }
+      @property --c {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #f9bcd2;
+      }
+      @property --w1 {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #f4f4f6;
+      }
+      @property --w2 {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #ffffff;
+      }
+      @property --rb {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #f9bcd2;
+      }
+      #scene {
+        transition:
+          --w1 0.5s,
+          --w2 0.5s,
+          --rb 0.5s;
+      }
+      #wrapG,
+      .bf {
+        transition:
+          transform 0.8s cubic-bezier(0.34, 1.3, 0.5, 1),
+          opacity 0.4s;
+      }
+      .rz {
+        transition:
+          transform 0.75s cubic-bezier(0.34, 1.45, 0.5, 1),
+          --c 0.5s;
+      }
+      .wa {
+        fill: var(--w1);
+        stroke: var(--w2);
+        stroke-opacity: 0.5;
+      }
+      .wb {
+        fill: color-mix(in srgb, var(--w1) 88%, white);
+        stroke: var(--w2);
+        stroke-opacity: 0.5;
+      }
+      .rb {
+        fill: color-mix(in srgb, var(--rb) 75%, black);
+      }
+      .pa {
+        fill: color-mix(in srgb, var(--c) 80%, black);
+      }
+      .pb {
+        fill: var(--c);
+      }
+      .pc {
+        fill: color-mix(in srgb, var(--c) 82%, white);
+      }
+      .pd {
+        fill: color-mix(in srgb, var(--c) 66%, white);
+      }
+      .ln {
+        fill: none;
+        stroke: color-mix(in srgb, var(--c) 50%, black);
+        stroke-opacity: 0.45;
+        stroke-width: 0.9;
+      }
+      #sway {
+        transform-origin: 200px 370px;
+        animation: sway 5s ease-in-out infinite alternate;
+      }
+      .wing {
+        animation: flap 0.45s ease-in-out infinite alternate;
+        transform-origin: 0 0;
+      }
+      .bob {
+        animation: bob 2.4s ease-in-out infinite alternate;
+      }
+      @keyframes sway {
+        from {
+          transform: rotate(-1.4deg);
+        }
+        to {
+          transform: rotate(1.4deg);
+        }
+      }
+      @keyframes flap {
+        from {
+          transform: scaleX(1);
+        }
+        to {
+          transform: scaleX(0.4);
+        }
+      }
+      @keyframes bob {
+        from {
+          transform: translateY(-3px);
+        }
+        to {
+          transform: translateY(3px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #sway,
+        .wing,
+        .bob {
+          animation: none;
+        }
+        .rz,
+        #wrapG,
+        .bf {
+          transition: none;
+        }
+      }
+      .fld {
+        width: 100%;
+        margin-top: 0.25rem;
+        border-radius: 0.75rem;
+        border: 1px solid #ffc9d9;
+        background: #fffafb;
+        padding: 0.6rem 0.75rem;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .fld:focus {
+        outline: none;
+        border-color: #d6457b;
+        box-shadow: 0 0 0 3px #d6457b2e;
+      }
+      .fld[aria-invalid="true"] {
+        border-color: #c0392b;
+        background: #fff5f4;
+      }
+      .lf {
+        transition:
+          transform 0.9s cubic-bezier(0.34, 1.4, 0.5, 1),
+          opacity 0.5s,
+          fill 0.5s;
+      }
+      .wc {
+        fill: color-mix(in srgb, var(--w1) 78%, white);
+        stroke: var(--w2);
+        stroke-opacity: 0.5;
+      }
+      .rb {
+        fill: color-mix(in srgb, var(--rb) 78%, black);
+      }
+      .rl {
+        fill: var(--rb);
+        stroke: #000;
+        stroke-opacity: 0.1;
+      }
+      .ru {
+        animation: twinkle 3.2s ease-in-out infinite alternate;
+      }
+      .tail {
+        animation: tail 3.4s ease-in-out infinite alternate;
+        transform-origin: 0 116px;
+      }
+      .t2 {
+        animation-delay: -1.7s;
+      }
+      .bow {
+        animation: bow 4s ease-in-out infinite alternate;
+        transform-origin: 0 115px;
+      }
+      @keyframes twinkle {
+        from {
+          opacity: 0.55;
+        }
+        to {
+          opacity: 0.95;
+        }
+      }
+      @keyframes tail {
+        from {
+          transform: rotate(-3deg);
+        }
+        to {
+          transform: rotate(3deg);
+        }
+      }
+      @keyframes bow {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.04);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ru,
+        .tail,
+        .bow {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="font-sans min-h-screen">
+    <header class="px-5 pt-8 pb-4 text-center">
+      <div class="flex items-center justify-center gap-3">
+        <svg
+          width="46"
+          height="46"
+          viewBox="-56 -56 112 112"
+          aria-hidden="true"
+          style="--c: #d6457b"
+        >
+          <use href="#rose" />
+        </svg>
+        <h1 class="font-display text-3xl md:text-5xl font-bold text-rose-800">
+          Aisha Handmade Flowers
+        </h1>
+      </div>
+      <p class="mt-2 text-rose-800/70 max-w-xl mx-auto">
+        Design your own bouquet. Every flower is folded by hand from satin
+        ribbon. Pick the size, colors and wrapping, and watch it come together.
+      </p>
+    </header>
+
+    <main
+      class="max-w-6xl mx-auto px-4 pb-16 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 items-start"
+    >
+      <!-- LIVE PREVIEW -->
+      <section class="contents lg:block lg:sticky lg:top-4">
+        <div
+          class="order-1 rounded-[2rem] bg-gradient-to-b from-rose-100 to-rose-200 p-4 md:p-6"
+        >
+          <div
+            id="bouquet"
+            class="aspect-square w-full max-w-[520px] mx-auto"
+          ></div>
+          <p id="previewNote" class="text-center text-sm text-rose-800/70 mt-1">
+            Preview is a sketch. Your real bouquet is made to order.
+          </p>
+        </div>
+        <div class="order-3 lg:mt-4 rounded-2xl bg-white p-5 shadow-sm">
+          <h2 class="font-display text-xl font-bold text-rose-800">
+            Your order
+          </h2>
+          <dl id="summary" class="mt-3 text-sm divide-y divide-rose-100"></dl>
+          <div class="flex items-baseline justify-between mt-4">
+            <span class="text-rose-800/70">Total</span>
+            <span
+              id="total"
+              class="font-display text-3xl font-bold text-rose-600"
+              >₱199</span
+            >
+          </div>
+          <p
+            id="err"
+            class="hidden mt-3 text-sm text-red-700 bg-red-50 rounded-lg px-3 py-2"
+            role="alert"
+          ></p>
+          <button
+            id="send"
+            class="mt-4 w-full rounded-xl bg-[#0a7cff] hover:bg-[#0868d6] text-white font-bold py-3.5 flex items-center justify-center gap-2 transition"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.4 2 2 6.2 2 11.5c0 2.9 1.3 5.4 3.4 7.1V22l3.1-1.7c1 .3 2.2.4 3.5.4 5.6 0 10-4.2 10-9.5S17.600 2 12 2zm1 12.800-2.600-2.700-5 2.700 5.500-5.800 2.600 2.700 5-2.700-5.500 5.800z"
+              />
+            </svg>
+            Send this design on Messenger
+          </button>
+          <p class="mt-2 text-xs text-center text-rose-800/60">
+            Tap the button to get your order image. Then save it, open
+            Messenger, and send the image with your order text.
+          </p>
+        </div>
+      </section>
+
+      <!-- CONTROLS -->
+      <section class="order-2 space-y-5">
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+          <h2 class="font-display text-xl font-bold text-rose-800">
+            How many flowers?
+          </h2>
+          <div
+            id="counts"
+            class="mt-3 grid grid-cols-2 sm:grid-cols-5 gap-2"
+          ></div>
+          <div id="customBox" class="hidden mt-3">
+            <label class="text-sm font-medium" for="customQty"
+              >How many flowers do you want? (1–50)</label
+            >
+            <input
+              id="customQty"
+              type="number"
+              min="1"
+              max="50"
+              value="12"
+              class="mt-1 w-32 rounded-lg border border-rose-200 px-3 py-2"
+            />
+            <p class="text-xs text-rose-800/60 mt-1">
+              We will send you a price quote on Messenger.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+          <h2 class="font-display text-xl font-bold text-rose-800">
+            Pick up to 2 colors
+          </h2>
+          <p class="text-sm text-rose-800/70">
+            Choose 1 for a single-color bouquet, or 2 for a mix. Cream / Milky
+            White works only as a mix, so pair it with another color.
+          </p>
+          <div
+            id="colors"
+            class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2"
+          ></div>
+        </div>
+
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+          <h2 class="font-display text-xl font-bold text-rose-800">
+            Wrapping, ribbon and extras
+          </h2>
+          <div id="wraps" class="mt-3 grid grid-cols-3 gap-2"></div>
+          <h3 class="mt-4 text-sm font-bold text-rose-800">Ribbon color</h3>
+          <div
+            id="ribbons"
+            class="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2"
+          ></div>
+          <label
+            class="opt mt-3 flex items-center gap-3 rounded-xl border border-rose-200 px-3 py-3 cursor-pointer"
+          >
+            <input
+              id="butterfly"
+              type="checkbox"
+              class="h-4 w-4 accent-rose-500"
+              checked
+            />
+            <span class="font-medium"
+              >Add butterflies
+              <span class="font-normal text-rose-800/60"
+                >(more for bigger bouquets)</span
+              ></span
+            >
+            <span id="bfNote" class="text-xs text-rose-800/60 ml-auto"
+              >Free</span
+            >
+          </label>
+        </div>
+
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+          <h2 class="font-display text-xl font-bold text-rose-800">
+            Your details
+          </h2>
+          <div class="mt-3 grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="text-sm font-medium" for="name">Your name</label>
+              <input
+                id="name"
+                class="fld"
+                placeholder="e.g. Antoneth"
+                autocomplete="name"
+              />
+            </div>
+            <div>
+              <label class="text-sm font-medium" for="phone"
+                >Mobile number
+                <span class="text-rose-800/50 font-normal"
+                  >(optional)</span
+                ></label
+              >
+              <input
+                id="phone"
+                type="tel"
+                inputmode="tel"
+                class="fld"
+                placeholder="09xx xxx xxxx"
+                autocomplete="tel"
+              />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="text-sm font-medium" for="occasion"
+                >What is the occasion?</label
+              >
+              <select id="occasion" class="fld">
+                <option>Just because</option>
+                <option>Birthday</option>
+                <option>Anniversary</option>
+                <option>Valentine's Day</option>
+                <option>Graduation</option>
+                <option>Wedding</option>
+                <option>Thank you</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <fieldset class="sm:col-span-2">
+              <legend class="text-sm font-medium">How will you get it?</legend>
+              <div class="mt-1 grid grid-cols-2 gap-2">
+                <label
+                  class="opt cursor-pointer rounded-xl border border-rose-200 px-3 py-2.5 text-center font-medium"
+                  ><input
+                    type="radio"
+                    name="ful"
+                    value="Pick-up"
+                    class="sr-only"
+                    checked
+                  />Pick-up</label
+                >
+                <label
+                  class="opt cursor-pointer rounded-xl border border-rose-200 px-3 py-2.5 text-center font-medium"
+                  ><input
+                    type="radio"
+                    name="ful"
+                    value="Delivery"
+                    class="sr-only"
+                  />Delivery</label
+                >
+              </div>
+            </fieldset>
+            <div>
+              <label class="text-sm font-medium" for="date">Date needed</label>
+              <input id="date" type="date" class="fld" />
+            </div>
+            <div>
+              <label class="text-sm font-medium" for="time">Time</label>
+              <input id="time" type="time" class="fld" />
+            </div>
+            <div id="addrBox" class="sm:col-span-2 hidden">
+              <label class="text-sm font-medium" for="loc"
+                >Delivery address</label
+              >
+              <input
+                id="loc"
+                class="fld"
+                placeholder="House no., street, barangay, town"
+                autocomplete="street-address"
+              />
+            </div>
+            <p
+              id="pickNote"
+              class="sm:col-span-2 text-sm text-rose-800/70 bg-rose-50 rounded-lg px-3 py-2"
+            >
+              We will confirm the pick-up spot with you on Messenger.
+            </p>
+            <div class="sm:col-span-2">
+              <div class="flex justify-between">
+                <label class="text-sm font-medium" for="msg"
+                  >Card message
+                  <span class="text-rose-800/50 font-normal"
+                    >(optional)</span
+                  ></label
+                ><span class="text-xs text-rose-800/60"
+                  ><span id="count">0</span>/150</span
+                >
+              </div>
+              <textarea
+                id="msg"
+                rows="3"
+                maxlength="150"
+                class="fld"
+                placeholder="Write what you want on the card"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div
+      id="done"
+      class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-3"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="doneTitle"
+    >
+      <div
+        class="w-full max-w-md max-h-[94vh] overflow-auto rounded-2xl bg-white text-[#3a1424] p-5 shadow-xl"
+      >
+        <h2
+          id="doneTitle"
+          class="font-display text-2xl font-bold text-rose-800"
+        >
+          Your order image is ready
+        </h2>
+        <p class="text-sm text-rose-800/70 mt-1">
+          1. Save the image. 2. Open Messenger. 3. Send the image and paste your
+          order text. If Save does not work on your phone, press and hold the
+          image.
+        </p>
+        <img
+          id="doneImg"
+          alt="Your order"
+          class="hidden mt-3 w-full max-h-[48vh] object-contain rounded-lg bg-rose-50"
+        />
+        <div class="mt-3 flex gap-2">
+          <button
+            id="saveImg"
+            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
+          >
+            Save image
+          </button>
+          <button
+            id="shareImg"
+            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
+          >
+            Share
+          </button>
+          <button
+            id="closeDone"
+            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
+          >
+            Close
+          </button>
+        </div>
+        <a
+          id="openM"
+          target="_blank"
+          rel="noopener"
+          class="mt-2 block w-full whitespace-nowrap rounded-xl bg-[#0a7cff] hover:bg-[#0868d6] text-white font-bold py-3.5 text-center"
+          >Open Messenger</a
+        >
+        <details class="mt-3">
+          <summary class="cursor-pointer text-sm text-rose-600">
+            Show order text (already copied)
+          </summary>
+          <pre
+            id="doneText"
+            class="mt-2 max-h-32 overflow-auto whitespace-pre-wrap rounded-lg bg-rose-50 p-3 text-xs font-sans"
+          ></pre>
+        </details>
+      </div>
+    </div>
+
+    <script>
+      // ====== SETTINGS: change these ======
+      const FB_PAGE = "aisha.balani.2025"; // your Facebook page username, e.g. "handmadeflowersph" (facebook.com/<this>)
+      const SHOP_NAME = "Aisha Handmade Flowers";
+      // ====================================
+
+      const COUNTS = [
+        { id: "3", label: "3 pcs", n: 3, price: 199 },
+        { id: "6", label: "6 pcs", n: 6, price: 449 },
+        { id: "7", label: "7 pcs", n: 7, price: 649 },
+        { id: "20", label: "19–20 pcs", n: 20, price: 1399 },
+        { id: "x", label: "Other", n: 12, price: null },
+      ];
+      const COLORS = [
+        ["Royal Blue", "#2f4fc9"],
+        ["Youlan Blue", "#7aa2e3"],
+        ["Deep Violet", "#5a2a8c"],
+        ["Lavender Purple", "#b79be0"],
+        ["Wine Red", "#7d1230"],
+        ["Light Pink", "#f9bcd2"],
+        ["Champagne", "#efd9b8"],
+        ["Moss Green", "#6c7b3b"],
+        ["Matcha Green", "#a9c987"],
+        ["Sunflower Yellow", "#f4b400"],
+        ["Sunny Yellow", "#ffe34d"],
+        ["Cream / Milky White", "#fff5e4"],
+      ];
+      const WRAPS = [
+        ["White", "#f4f4f6", "#ffffff"],
+        ["Burgundy", "#8a1c3b", "#3a0c1a"],
+        ["Black sparkle", "#26222b", "#111"],
+      ];
+      const st = { count: COUNTS[0], colors: [], wrap: 0 };
+      const $ = (id) => document.getElementById(id);
+      const peso = (n) => "₱" + n.toLocaleString("en-PH");
+
+      function mix(hex, t, to) {
+        // blend toward white (255) or black (0)
+        const c = parseInt(hex.slice(1), 16),
+          r = c >> 16,
+          g = (c >> 8) & 255,
+          b = c & 255;
+        const f = (v) => Math.round(v + (to - v) * t);
+        return `rgb(${f(r)},${f(g)},${f(b)})`;
+      }
+
+      // ---------- build option UI ----------
+      COUNTS.forEach((c, i) => {
+        const l = document.createElement("label");
+        l.className =
+          "opt cursor-pointer rounded-xl border border-rose-200 px-2 py-3 text-center";
+        l.innerHTML = `<input type="radio" name="count" class="sr-only" ${i === 0 ? "checked" : ""}>
+    <div class="font-bold">${c.label}</div><div class="text-sm text-rose-600 font-medium">${c.price ? peso(c.price) : "Custom"}</div>`;
+        l.querySelector("input").onchange = () => {
+          st.count = c;
+          $("customBox").classList.toggle("hidden", c.id !== "x");
+          render();
+        };
+        $("counts").appendChild(l);
+      });
+      COLORS.forEach(([name, hex], i) => {
+        const l = document.createElement("label");
+        l.className =
+          "opt flex items-center gap-2 cursor-pointer rounded-xl border border-rose-200 px-3 py-2.5";
+        l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="h-6 w-6 rounded-full shrink-0 border border-black/10" style="background:${hex}"></span><span class="text-sm font-medium leading-tight">${name}</span>`;
+        l.querySelector("input").onchange = (e) => {
+          if (e.target.checked) st.colors.push(i);
+          else st.colors = st.colors.filter((x) => x !== i);
+          render();
+        };
+        $("colors").appendChild(l);
+      });
+      WRAPS.forEach(([name, a], i) => {
+        const l = document.createElement("label");
+        l.className =
+          "opt cursor-pointer rounded-xl border border-rose-200 px-2 py-3 text-center";
+        l.innerHTML = `<input type="radio" name="wrap" class="sr-only" ${i === 0 ? "checked" : ""}><span class="inline-block h-6 w-6 rounded-full border border-black/10 align-middle mr-1" style="background:${a}"></span><span class="text-sm font-medium">${name}</span>`;
+        l.querySelector("input").onchange = () => {
+          st.wrap = i;
+          render();
+        };
+        $("wraps").appendChild(l);
+      });
+      $("butterfly").onchange = render;
+      $("customQty").oninput = render;
+      ["name", "date", "time", "loc", "msg"].forEach(
+        (id) => ($(id).oninput = render),
+      );
+      $("date").value = new Date().toISOString().slice(0, 10);
+
+      // ---------- bouquet drawing (persistent SVG, animated updates) ----------
+      const NS = "http://www.w3.org/2000/svg";
+      function petals(cnt, off, rx, ry, rot, cls) {
+        let s = "";
+        for (let i = 0; i < cnt; i++) {
+          s +=
+            `<g transform="rotate(${rot + (i * 360) / cnt})"><ellipse cy="${-off}" rx="${rx}" ry="${ry}" class="${cls}"/>` +
+            `<path class="ln" d="M${-rx * 0.75} ${-off - ry * 0.45}Q0 ${-off - ry * 1.05} ${rx * 0.75} ${-off - ry * 0.45}"/>` +
+            `<ellipse cx="${-rx * 0.25}" cy="${-off - ry * 0.4}" rx="${rx * 0.4}" ry="${ry * 0.22}" fill="#fff" opacity=".28"/></g>`;
+        }
+        return s;
+      }
+      const ROSE =
+        petals(6, 28, 20, 25, 0, "pa") +
+        petals(5, 17, 15, 19, 18, "pb") +
+        petals(4, 9, 10, 12, 40, "pc") +
+        petals(3, 3.5, 6.5, 7.5, 10, "pd") +
+        `<path class="ln" style="stroke-width:1.4" d="M0 0m-1.5 0a1.5 1.5 0 1 1 3 0a3.5 3.5 0 1 1-7 0a5.5 5.5 0 1 1 11 0a7.5 7.5 0 1 1-15 0"/>` +
+        `<circle r="53" fill="url(#sheen)"/><circle r="53" fill="none" stroke="#000" stroke-opacity=".12"/>`;
+      const BF = `<g class="wing"><path d="M0 0C-8-22-34-24-30-4-28 8-12 8 0 0zM0 0C8-22 34-24 30-4 28 8 12 8 0 0zM0 0C-6 10-22 18-16 28-10 34-2 14 0 0zM0 0C6 10 22 18 16 28 10 34 2 14 0 0z" fill="#2b2233" fill-opacity=".8" stroke="#fff" stroke-opacity=".7"/></g><rect x="-1.2" y="-6" width="2.4" height="20" rx="1.2" fill="#2b2233"/>`;
+      const BFW = `<path d="M0 0C-8-22-34-24-30-4-28 8-12 8 0 0zM0 0C8-22 34-24 30-4 28 8 12 8 0 0zM0 0C-6 10-22 18-16 28-10 34-2 14 0 0zM0 0C6 10 22 18 16 28 10 34 2 14 0 0z" stroke="#fff" stroke-opacity=".7"/>`;
+      const BFB = `<rect x="-1.2" y="-6" width="2.4" height="20" rx="1.2" fill="#2b2233"/>`;
+      const ruffle = (cnt, r, rx, ry, off, op) =>
+        [...Array(cnt)]
+          .map(
+            (_, i) =>
+              `<ellipse class="ru" rx="${rx}" ry="${ry}" cy="${-r}" fill="#fff" opacity="${op}" transform="rotate(${(i * 360) / cnt + off})" style="animation-delay:${-(i % 7) * 0.45}s"/>`,
+          )
+          .join("");
+      const bowHalf = `<path class="rb" d="M0 114C-46 78-70 112-34 130C-14 138-2 124 0 114Z"/><path class="rl" d="M0 114C-30 94-46 112-30 124C-16 130-4 122 0 114Z"/>`;
+      $("bouquet").innerHTML =
+        `<svg id="scene" viewBox="0 0 400 400" role="img" aria-label="Live bouquet preview" class="w-full h-full">
+<defs><radialGradient id="sheen" cx=".32" cy=".28" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></radialGradient>
+<g id="rose">${ROSE}</g></defs>
+<ellipse id="shadow" cx="200" cy="388" rx="90" ry="7" fill="#5e1631" opacity=".14"/>
+<g id="sway"><g id="wrapG">
+  <g class="tail t1"><path class="rb" d="M0 116C-24 150-30 184-26 208l12-7 7 15C-6 182-4 152 0 116Z"/></g>
+  <g class="tail t2"><path class="rb" d="M0 116C24 150 30 184 26 208l-12-7-7 15C6 182 4 152 0 116Z"/></g>
+  <path class="wa" d="M-36 95L0 195 36 95z"/>
+  ${[...Array(9)].map((_, i) => `<rect class="lf ${i % 2 ? "wa" : "wb"}" x="-105" y="-105" width="210" height="210" rx="46" data-r="${i * 40}"/>`).join("")}
+  ${[...Array(7)].map((_, i) => `<rect class="lf wc" x="-84" y="-84" width="168" height="168" rx="40" data-r="${i * 51 + 20}"/>`).join("")}
+  <circle r="108" class="wa" opacity=".3"/>${ruffle(30, 116, 15, 7, 0, 0.8)}${ruffle(24, 98, 11, 5, 7, 0.6)}
+  <g class="bow"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/></g>
+</g><g id="roses"></g><g id="bfs"></g></g></svg>`;
+
+      // leaves unfold once on load
+      document.querySelectorAll(".lf").forEach((l) => {
+        l.style.transform = `rotate(${+l.dataset.r + 50}deg) scale(.15)`;
+        l.style.opacity = 0;
+      });
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() =>
+          document.querySelectorAll(".lf").forEach((l, i) => {
+            l.style.transitionDelay = i * 55 + "ms";
+            l.style.transform = `rotate(${l.dataset.r}deg) scale(1)`;
+            l.style.opacity = 1;
+          }),
+        ),
+      );
+
+      const roses = [],
+        bfs = [];
+      const CX = 200,
+        CY = 165;
+      const bfCount = (n) => Math.max(1, Math.min(6, Math.round(n / 4)));
+      function layout(n) {
+        if (n >= 8)
+          return [...Array(n)].map((_, i) => {
+            const rr = 0.95 * Math.sqrt(i + 0.35),
+              a = i * 2.39996;
+            return [Math.cos(a) * rr, Math.sin(a) * rr];
+          });
+        const sp = 1.85,
+          pts = [];
+        if (n === 1) pts.push([0, 0]);
+        else if (n <= 6) {
+          const R = sp / (2 * Math.sin(Math.PI / n));
+          for (let i = 0; i < n; i++) {
+            const a = (i / n) * 6.2832 - 1.5708;
+            pts.push([Math.cos(a) * R, Math.sin(a) * R]);
+          }
+        } else {
+          pts.push([0, 0]);
+          let rem = n - 1,
+            k = 1;
+          while (rem > 0) {
+            const c = Math.min(6 * k + (k > 1 ? 1 : 0), rem);
+            for (let j = 0; j < c; j++) {
+              const a = (j / c) * 6.2832 + k * 0.4 - 1.5708;
+              pts.push([Math.cos(a) * k * sp, Math.sin(a) * k * sp]);
+            }
+            rem -= c;
+            k++;
+          }
+        }
+        return pts;
+      }
+      function drawBouquet() {
+        const n = qty(),
+          w = WRAPS[st.wrap],
+          rbn = RIBBONS[st.ribbon];
+        const picked = st.colors.length
+          ? st.colors.map((i) => COLORS[i][1])
+          : ["#f9bcd2"];
+        const pts = layout(n),
+          ext = Math.max(...pts.map((p) => Math.hypot(p[0], p[1]))) + 1;
+        const r = Math.min(46, 95 / ext),
+          W = Math.max(96, Math.min(150, ext * r * 1.42 + 28)),
+          sc = W / 150,
+          e = ext * r;
+        const scene = $("scene");
+        scene.style.setProperty("--w1", w[1]);
+        scene.style.setProperty("--w2", w[2]);
+        scene.style.setProperty("--rb", rbn[1] || picked[0]);
+        $("wrapG").style.transform = `translate(${CX}px,${CY}px) scale(${sc})`;
+        $("shadow").setAttribute("rx", 40 + W * 0.6);
+        const host = $("roses");
+        for (let i = 0; i < Math.max(n, roses.length); i++) {
+          if (i < n) {
+            let el = roses[i];
+            const rot = (i * 47) % 360,
+              T = `translate(${CX + pts[i][0] * r}px,${CY + pts[i][1] * r}px) rotate(${rot}deg) scale(${(r * (n >= 8 ? 1.12 : 1)) / 53})`;
+            if (!el) {
+              el = document.createElementNS(NS, "use");
+              el.setAttribute("href", "#rose");
+              el.setAttribute("class", "rz");
+              el.style.transform = `translate(${CX}px,${CY}px) rotate(${rot + 140}deg) scale(0)`;
+              host.insertBefore(el, host.firstChild);
+              roses[i] = el;
+              el.getBoundingClientRect();
+            }
+            el.style.transitionDelay = Math.min(i * 22, 380) + "ms";
+            el.style.setProperty("--c", picked[i % picked.length]);
+            el.style.transform = T;
+          } else if (roses[i]) {
+            const el = roses[i];
+            roses[i] = null;
+            el.style.transitionDelay = "0ms";
+            el.style.transform = `translate(${CX}px,${CY}px) rotate(200deg) scale(0)`;
+            setTimeout(() => el.remove(), 500);
+          }
+        }
+        roses.length = n;
+        // butterflies scale with flower count
+        const want = $("butterfly").checked ? bfCount(n) : 0,
+          b = Math.max(0.7, Math.min(1.3, r / 30));
+        for (let k = 0; k < 6; k++) {
+          let el = bfs[k];
+          if (!el) {
+            el = document.createElementNS(NS, "g");
+            el.setAttribute("class", "bf");
+            el.innerHTML = `<g class="bob" style="animation-delay:${-k * 0.7}s"><g class="wing" style="animation-delay:${-k * 0.13}s">${BFW}</g>${BFB}</g>`;
+            el.style.transform = `translate(${CX}px,${CY}px) scale(0)`;
+            el.style.opacity = 0;
+            $("bfs").appendChild(el);
+            bfs[k] = el;
+          }
+          const wp = el.querySelector(".wing path");
+          wp.setAttribute(
+            "fill",
+            k % 2
+              ? `color-mix(in srgb, ${picked[k % picked.length]} 45%, #fff)`
+              : "#2b2233",
+          );
+          wp.setAttribute("fill-opacity", k % 2 ? 0.85 : 0.8);
+          const a = -2.2 + k * 2.4,
+            d = e * (0.7 + (k % 3) * 0.14);
+          el.style.transitionDelay = k * 90 + "ms";
+          el.style.transform =
+            k < want
+              ? `translate(${CX + Math.cos(a) * d}px,${CY + Math.sin(a) * d * 0.9 - 6}px) rotate(${k * 41 - 30}deg) scale(${b * (0.85 + (k % 3) * 0.12)})`
+              : `translate(${CX}px,${CY}px) scale(0)`;
+          el.style.opacity = k < want ? 1 : 0;
+        }
+      }
+
+      // ---------- state, summary, validation ----------
+      const RIBBONS = [
+        ["Match flowers", null],
+        ["White", "#ffffff"],
+        ["Gold", "#d9a441"],
+        ["Burgundy", "#7d1230"],
+        ["Lavender", "#b79be0"],
+        ["Black", "#26222b"],
+      ];
+      st.ribbon = 0;
+      st.ful = "Pick-up";
+      RIBBONS.forEach(([name, hex], i) => {
+        const l = document.createElement("label");
+        l.className =
+          "opt cursor-pointer rounded-xl border border-rose-200 px-2 py-2.5 text-center text-sm font-medium";
+        l.innerHTML =
+          `<input type="radio" name="ribbon" class="sr-only" ${i === 0 ? "checked" : ""}>` +
+          (hex
+            ? `<span class="inline-block h-4 w-4 rounded-full border border-black/10 align-middle mr-1" style="background:${hex}"></span>`
+            : "✦ ") +
+          name;
+        l.querySelector("input").onchange = () => {
+          st.ribbon = i;
+          render();
+        };
+        $("ribbons").appendChild(l);
+      });
+      document.querySelectorAll("input[name=ful]").forEach(
+        (inp) =>
+          (inp.onchange = () => {
+            st.ful = inp.value;
+            $("addrBox").classList.toggle("hidden", st.ful !== "Delivery");
+            $("pickNote").classList.toggle("hidden", st.ful === "Delivery");
+            render();
+          }),
+      );
+      ["phone", "occasion"].forEach((id) => ($(id).oninput = render));
+      $("msg").addEventListener(
+        "input",
+        () => ($("count").textContent = $("msg").value.length),
+      );
+      $("date").min = $("date").value;
+      function qty() {
+        return st.count.id === "x"
+          ? Math.max(1, Math.min(50, +$("customQty").value || 1))
+          : st.count.n;
+      }
+      function data() {
+        return {
+          count: st.count.id === "x" ? qty() + " pcs (custom)" : st.count.label,
+          price: st.count.price ? peso(st.count.price) : "To be quoted",
+          colors:
+            st.colors.map((i) => COLORS[i][0]).join(" + ") || "Not selected",
+          wrap: WRAPS[st.wrap][0],
+          ribbon: RIBBONS[st.ribbon][0],
+          bf: $("butterfly").checked ? bfCount(qty()) : 0,
+          occasion: $("occasion").value,
+          ful: st.ful,
+          phone: $("phone").value.trim(),
+          name: $("name").value.trim(),
+          date: $("date").value,
+          time: $("time").value,
+          loc: $("loc").value.trim(),
+          msg: $("msg").value.trim(),
+        };
+      }
+      function problems() {
+        const d = data(),
+          p = [];
+        if (!st.colors.length) p.push(["colors", "Pick at least 1 color."]);
+        if (
+          st.colors.length === 1 &&
+          COLORS[st.colors[0]][0].startsWith("Cream")
+        )
+          p.push([
+            "colors",
+            "Cream / Milky White must be mixed. Pick one more color.",
+          ]);
+        if (!d.name) p.push(["name", "Enter your name."]);
+        if (!d.date || d.date < $("date").min)
+          p.push(["date", "Choose a date that is today or later."]);
+        if (d.ful === "Delivery" && !d.loc)
+          p.push(["loc", "Enter your delivery address."]);
+        return p;
+      }
+      function render() {
+        document
+          .querySelectorAll("#colors input")
+          .forEach(
+            (inp) => (inp.disabled = st.colors.length >= 2 && !inp.checked),
+          );
+        const d = data();
+        $("bfNote").textContent = $("butterfly").checked
+          ? `${bfCount(qty())} for this size · free`
+          : "Free";
+        const rows = [
+          ["Flowers", d.count],
+          ["Colors", d.colors],
+          ["Wrapping", d.wrap],
+          ["Ribbon", d.ribbon],
+          ["Butterflies", d.bf || "None"],
+          ["Occasion", d.occasion],
+          ["When", [d.date, d.time].filter(Boolean).join(" · ") || "—"],
+          [
+            d.ful,
+            d.ful === "Delivery"
+              ? d.loc || "Not entered"
+              : "Location confirmed on Messenger",
+          ],
+        ];
+        $("summary").innerHTML = rows
+          .map(
+            ([k, v]) =>
+              `<div class="flex justify-between gap-4 py-1.5"><dt class="text-rose-800/70">${k}</dt><dd class="font-medium text-right">${String(v).replace(/</g, "&lt;")}</dd></div>`,
+          )
+          .join("");
+        $("total").textContent = st.count.price
+          ? peso(st.count.price)
+          : "Quote";
+        drawBouquet();
+      }
+      function orderText() {
+        const d = data();
+        return [
+          `Hi ${SHOP_NAME}! I'd like to order a custom bouquet.`,
+          "",
+          `Name: ${d.name}`,
+          d.phone ? `Mobile: ${d.phone}` : null,
+          `Occasion: ${d.occasion}`,
+          `Flowers: ${d.count}`,
+          `Colors: ${d.colors}`,
+          `Wrapping: ${d.wrap}`,
+          `Ribbon: ${d.ribbon}`,
+          `Butterflies: ${d.bf || "None"}`,
+          `${d.ful}: ${d.date}${d.time ? " " + d.time : ""}`,
+          d.ful === "Delivery" ? `Address: ${d.loc}` : null,
+          `Price: ${d.price}`,
+          d.msg ? `Card message: ${d.msg}` : null,
+        ]
+          .filter((l) => l !== null)
+          .join("\n");
+      }
+      async function copyText(t) {
+        try {
+          await navigator.clipboard.writeText(t);
+        } catch (e) {
+          const x = document.createElement("textarea");
+          x.value = t;
+          document.body.appendChild(x);
+          x.select();
+          try {
+            document.execCommand("copy");
+          } catch (_) {}
+          x.remove();
+        }
+      }
+      // ---------- order image (saved to the customer's phone) ----------
+      let orderFile = null;
+      function orderRows() {
+        const d = data();
+        return [
+          ["Name", d.name || "—"],
+          d.phone ? ["Mobile", d.phone] : null,
+          ["Occasion", d.occasion],
+          ["Flowers", d.count],
+          ["Colors", d.colors],
+          ["Wrapping", d.wrap],
+          ["Ribbon", d.ribbon],
+          ["Butterflies", d.bf || "None"],
+          ["When", [d.date, d.time].filter(Boolean).join(" at ") || "—"],
+          [
+            d.ful,
+            d.ful === "Delivery" ? d.loc || "—" : "Confirmed on Messenger",
+          ],
+          d.msg ? ["Card message", d.msg] : null,
+        ].filter(Boolean);
+      }
+      async function sceneImage() {
+        const c = $("scene").cloneNode(true);
+        c.setAttribute("xmlns", NS);
+        c.setAttribute("width", 800);
+        c.setAttribute("height", 800);
+        c.removeAttribute("class");
+        const css =
+          [...document.querySelectorAll("style")]
+            .map((x) => x.textContent)
+            .find((t) => t.includes(".pa {")) || "";
+        const sty = document.createElementNS(NS, "style");
+        sty.textContent =
+          css + " *{animation:none!important;transition:none!important}";
+        c.insertBefore(sty, c.firstChild);
+        const img = new Image();
+        const ok = new Promise((res, rej) => {
+          img.onload = res;
+          img.onerror = rej;
+          setTimeout(rej, 4000);
+        });
+        img.src =
+          "data:image/svg+xml;charset=utf-8," +
+          encodeURIComponent(new XMLSerializer().serializeToString(c));
+        await ok;
+        return img;
+      }
+      function rrect(x, a, b, w, h, r) {
+        x.beginPath();
+        x.moveTo(a + r, b);
+        x.arcTo(a + w, b, a + w, b + h, r);
+        x.arcTo(a + w, b + h, a, b + h, r);
+        x.arcTo(a, b + h, a, b, r);
+        x.arcTo(a, b, a + w, b, r);
+        x.closePath();
+      }
+      function fit(x, text, max) {
+        let t = String(text);
+        while (x.measureText(t).width > max && t.length > 1) t = t.slice(0, -2);
+        return t === String(text) ? t : t.trimEnd() + "…";
+      }
+      async function buildImage() {
+        try {
+          await document.fonts.ready;
+        } catch (_) {}
+        const rows = orderRows(),
+          W = 900,
+          H = 880 + rows.length * 50 + 190;
+        const cv = document.createElement("canvas");
+        cv.width = W;
+        cv.height = H;
+        const x = cv.getContext("2d");
+        const g = x.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, "#ffe4ec");
+        g.addColorStop(1, "#ffc9d9");
+        x.fillStyle = g;
+        x.fillRect(0, 0, W, H);
+        x.textAlign = "center";
+        x.fillStyle = "#5e1631";
+        x.font = "700 50px Fraunces, Georgia, serif";
+        x.fillText(SHOP_NAME, W / 2, 85);
+        x.fillStyle = "#b92f64";
+        x.font = '500 26px "DM Sans", system-ui, sans-serif';
+        x.fillText("My custom bouquet order", W / 2, 128);
+        x.fillStyle = "rgba(255,255,255,.5)";
+        rrect(x, 70, 160, 760, 640, 48);
+        x.fill();
+        try {
+          x.drawImage(await sceneImage(), 100, 170, 700, 620);
+        } catch (e) {
+          console.error("preview image failed", e);
+        }
+        x.fillStyle = "#fff";
+        rrect(x, 50, 830, 800, rows.length * 50 + 170, 36);
+        x.fill();
+        let y = 892;
+        rows.forEach(([k, v], i) => {
+          x.textAlign = "left";
+          x.fillStyle = "#8a4a62";
+          x.font = '400 25px "DM Sans", system-ui, sans-serif';
+          x.fillText(k, 90, y);
+          x.textAlign = "right";
+          x.fillStyle = "#3a1424";
+          x.font = '700 25px "DM Sans", system-ui, sans-serif';
+          x.fillText(fit(x, v, 480), 810, y);
+          x.strokeStyle = "#ffe4ec";
+          x.lineWidth = 2;
+          x.beginPath();
+          x.moveTo(90, y + 18);
+          x.lineTo(810, y + 18);
+          x.stroke();
+          y += 50;
+        });
+        x.textAlign = "left";
+        x.fillStyle = "#8a4a62";
+        x.font = '500 28px "DM Sans", system-ui, sans-serif';
+        x.fillText("Total", 90, y + 50);
+        x.textAlign = "right";
+        x.fillStyle = "#b92f64";
+        x.font = "700 58px Fraunces, Georgia, serif";
+        x.fillText(
+          st.count.price ? peso(st.count.price) : "To be quoted",
+          810,
+          y + 56,
+        );
+        const blob = await new Promise((r) => cv.toBlob(r, "image/png"));
+        orderFile = new File([blob], "aisha-bouquet-order.png", {
+          type: "image/png",
+        });
+        $("doneImg").src = URL.createObjectURL(blob);
+        $("doneImg").classList.remove("hidden");
+      }
+      function downloadImage() {
+        if (!orderFile) return;
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(orderFile);
+        a.download = orderFile.name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      async function shareImage() {
+        if (
+          orderFile &&
+          navigator.canShare &&
+          navigator.canShare({ files: [orderFile] })
+        ) {
+          try {
+            await navigator.share({
+              files: [orderFile],
+              title: "My bouquet order",
+            });
+          } catch (_) {}
+        }
+      }
+      const messengerUrl = (t) =>
+        "https://m.me/" +
+        encodeURIComponent(FB_PAGE) +
+        "?text=" +
+        encodeURIComponent(t);
+      $("openM").href = "https://m.me/" + encodeURIComponent(FB_PAGE);
+      $("send").onclick = async () => {
+        document
+          .querySelectorAll("[aria-invalid]")
+          .forEach((el) => el.removeAttribute("aria-invalid"));
+        const p = problems(),
+          err = $("err");
+        if (p.length) {
+          err.textContent = p.map((x) => x[1]).join(" ");
+          err.classList.remove("hidden");
+          p.forEach(([id]) => {
+            const el = $(id);
+            if (el && el.tagName === "INPUT")
+              el.setAttribute("aria-invalid", "true");
+          });
+          const first = p[0][0];
+          ($(first) || $("colors")).scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          return;
+        }
+        err.classList.add("hidden");
+        const t = orderText(),
+          url = messengerUrl(t);
+        copyText(t);
+        $("send").disabled = true;
+        $("send").classList.add("opacity-70");
+        try {
+          await buildImage();
+        } catch (e) {
+          console.error(e);
+        }
+        $("send").disabled = false;
+        $("send").classList.remove("opacity-70");
+        $("doneText").textContent = t;
+        $("openM").href = url;
+        $("shareImg").classList.toggle(
+          "hidden",
+          !(
+            orderFile &&
+            navigator.canShare &&
+            navigator.canShare({ files: [orderFile] })
+          ),
+        );
+        $("done").classList.remove("hidden");
+      };
+      $("saveImg").onclick = downloadImage;
+      $("shareImg").onclick = shareImage;
+      $("closeDone").onclick = () => $("done").classList.add("hidden");
+      $("done").onclick = (e) => {
+        if (e.target === $("done")) $("done").classList.add("hidden");
+      };
+      render();
+    </script>
+  </body>
+</html>
