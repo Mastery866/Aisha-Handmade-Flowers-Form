@@ -287,44 +287,477 @@
           animation: none;
         }
       }
+      .gate-bg {
+        background: linear-gradient(
+          135deg,
+          #fff4f7,
+          #ffe4ec,
+          #fde7f3,
+          #f3e8ff,
+          #fff4f7
+        );
+        background-size: 300% 300%;
+        animation: shift 12s ease infinite;
+      }
+      .pf {
+        position: absolute;
+        bottom: -90px;
+        opacity: 0;
+        animation: rise linear infinite;
+        filter: drop-shadow(0 4px 6px rgba(94, 22, 49, 0.2));
+      }
+      .logo {
+        animation: wiggle 2.6s ease-in-out infinite;
+        transform-origin: 50% 80%;
+      }
+      .spark {
+        animation: twinkle 1.6s ease-in-out infinite alternate;
+      }
+      .glow {
+        animation:
+          glow 1.8s ease-out infinite,
+          hue 6s linear infinite;
+      }
+      .pulse-dots {
+        animation: pulse 1.1s ease-in-out infinite;
+      }
+      @keyframes shift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+      @keyframes rise {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) rotate(0);
+        }
+        10% {
+          opacity: 0.9;
+        }
+        50% {
+          transform: translate(34px, -55vh) rotate(180deg);
+        }
+        90% {
+          opacity: 0.9;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-24px, -120vh) rotate(360deg);
+        }
+      }
+      @keyframes wiggle {
+        0%,
+        100% {
+          transform: rotate(-6deg) scale(1);
+        }
+        50% {
+          transform: rotate(6deg) scale(1.08);
+        }
+      }
+      @keyframes glow {
+        0% {
+          box-shadow: 0 0 0 0 rgba(217, 70, 239, 0.55);
+        }
+        100% {
+          box-shadow: 0 0 0 18px rgba(217, 70, 239, 0);
+        }
+      }
+      @keyframes hue {
+        from {
+          filter: hue-rotate(0deg);
+        }
+        to {
+          filter: hue-rotate(40deg);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.5);
+          color: #d6457b;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .gate-bg,
+        .pf,
+        .logo,
+        .spark,
+        .glow,
+        .pulse-dots {
+          animation: none;
+        }
+        .pf {
+          opacity: 0.6;
+          bottom: auto;
+          top: 20%;
+        }
+      }
+      @property --wo {
+        syntax: "<number>";
+        inherits: true;
+        initial-value: 0.4;
+      }
+      @property --fl {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: #ff8fbf;
+      }
+      #scene {
+        transition:
+          --w1 0.5s,
+          --w2 0.5s,
+          --rb 0.5s,
+          --wo 0.5s,
+          --fl 0.5s;
+      }
+      .wa,
+      .wb,
+      .wc {
+        stroke-width: 3;
+        stroke-opacity: 0.95;
+        fill-opacity: var(--wo);
+        stroke-linejoin: round;
+      }
+      .wa {
+        fill: var(--w1);
+      }
+      .wb {
+        fill: color-mix(in srgb, var(--w1) 80%, white);
+      }
+      .wc {
+        fill: color-mix(in srgb, var(--w1) 65%, white);
+      }
+      .wa,
+      .wb,
+      .wc,
+      .ws {
+        stroke: var(--w2);
+      }
+      .ws {
+        fill: var(--w1);
+        stroke-width: 2;
+        stroke-opacity: 0.7;
+      }
+      .pa,
+      .pb,
+      .pc,
+      .pd {
+        stroke: color-mix(in srgb, var(--c) 45%, white);
+        stroke-width: 1;
+        stroke-opacity: 0.6;
+      }
+      .fg {
+        transition:
+          transform 0.8s cubic-bezier(0.34, 1.3, 0.5, 1),
+          opacity 0.4s;
+      }
+      .fb {
+        fill: color-mix(in srgb, var(--fl) 55%, white);
+        opacity: 0.5;
+      }
+      .d0 {
+        fill: var(--fl);
+      }
+      .d1 {
+        fill: color-mix(in srgb, var(--fl) 50%, white);
+      }
+      .d2 {
+        fill: #fff;
+        opacity: 0.9;
+      }
+      .d0,
+      .d1 {
+        stroke: color-mix(in srgb, var(--fl) 60%, #888);
+        stroke-width: 0.35;
+        stroke-opacity: 0.45;
+      }
+      .fly {
+        position: absolute;
+        left: 0;
+        top: 0;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        will-change: transform;
+        opacity: 0.92;
+      }
+      .f0 {
+        animation-name: fly1;
+      }
+      .f1 {
+        animation-name: fly2;
+      }
+      .f2 {
+        animation-name: fly3;
+      }
+      .bw1 {
+        fill: var(--b);
+      }
+      .bw2 {
+        fill: color-mix(in srgb, var(--b) 68%, white);
+      }
+      .wg {
+        animation: flap var(--fs, 0.45s) ease-in-out infinite alternate;
+        transform-origin: 0 0;
+      }
+      .blob {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(50px);
+        opacity: 0.55;
+        animation: drift 14s ease-in-out infinite alternate;
+      }
+      @keyframes drift {
+        from {
+          transform: translate(0, 0) scale(1);
+        }
+        to {
+          transform: translate(36px, -44px) scale(1.18);
+        }
+      }
+      @keyframes fly1 {
+        0% {
+          transform: translate(-18vw, 72vh) rotate(35deg);
+        }
+        25% {
+          transform: translate(22vw, 42vh) rotate(-10deg);
+        }
+        50% {
+          transform: translate(52vw, 58vh) rotate(18deg);
+        }
+        75% {
+          transform: translate(82vw, 22vh) rotate(-14deg);
+        }
+        100% {
+          transform: translate(118vw, 34vh) rotate(25deg);
+        }
+      }
+      @keyframes fly2 {
+        0% {
+          transform: translate(115vw, 20vh) rotate(-30deg);
+        }
+        30% {
+          transform: translate(75vw, 48vh) rotate(12deg);
+        }
+        55% {
+          transform: translate(40vw, 30vh) rotate(-16deg);
+        }
+        80% {
+          transform: translate(12vw, 64vh) rotate(14deg);
+        }
+        100% {
+          transform: translate(-18vw, 50vh) rotate(-24deg);
+        }
+      }
+      @keyframes fly3 {
+        0% {
+          transform: translate(10vw, 112vh) rotate(8deg);
+        }
+        30% {
+          transform: translate(34vw, 70vh) rotate(-12deg);
+        }
+        60% {
+          transform: translate(64vw, 40vh) rotate(14deg);
+        }
+        100% {
+          transform: translate(90vw, -14vh) rotate(-6deg);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .fly,
+        .blob {
+          animation: none;
+        }
+        .fly {
+          transform: translate(calc(var(--n, 20) * 1vw), 30vh);
+        }
+      }
+      .stp {
+        display: inline-grid;
+        place-items: center;
+        flex: none;
+        height: 1.6rem;
+        width: 1.6rem;
+        border-radius: 9999px;
+        background: #5e1631;
+        color: #fff;
+        font:
+          700 0.8rem "DM Sans",
+          sans-serif;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+      }
+      li > .stp {
+        margin-right: 0;
+      }
+      .sp {
+        position: absolute;
+        pointer-events: none;
+        z-index: 5;
+        animation: spup 1s ease-out forwards;
+      }
+      @keyframes spup {
+        from {
+          opacity: 1;
+          transform: translateY(0) scale(0.6);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(-44px) scale(1.25);
+        }
+      }
+      #bouquet {
+        transition: max-width 0.35s ease;
+      }
+      @media (max-width: 1023px) {
+        #bouquet.exp {
+          max-width: min(90vw, 62vh);
+        }
+      }
+      .fb {
+        fill: var(--fl);
+        opacity: 0.35;
+      }
+      .secret {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        cursor: default;
+      }
+      .secret .ring circle {
+        transition: stroke-dashoffset 0.15s;
+      }
+      .secret.holding .ring circle {
+        stroke-dashoffset: 0;
+        transition: stroke-dashoffset 2.2s linear;
+      }
+      .opt {
+        position: relative;
+      }
+      .oosb {
+        display: none;
+        position: absolute;
+        top: -9px;
+        right: 8px;
+        background: #5e1631;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        padding: 2px 9px;
+        border-radius: 9999px;
+        box-shadow: 0 2px 6px rgba(94, 22, 49, 0.3);
+      }
+      .opt.is-oos {
+        opacity: 0.6;
+        filter: grayscale(0.9);
+        cursor: not-allowed;
+        background: #f6f1f3;
+      }
+      .opt.is-oos .oosb {
+        display: block;
+      }
     </style>
   </head>
   <body class="font-sans min-h-screen">
-    <header class="px-5 pt-8 pb-4 text-center">
+    <header class="px-5 pt-8 pb-3 text-center">
       <div class="flex items-center justify-center gap-3">
-        <svg
-          width="46"
-          height="46"
-          viewBox="-56 -56 112 112"
-          aria-hidden="true"
-          style="--c: #d6457b"
+        <button
+          id="secretBtn"
+          type="button"
+          class="secret relative grid h-[54px] w-[54px] place-items-center rounded-full"
+          aria-label="Aisha Handmade Flowers logo"
         >
-          <use href="#rose" />
-        </svg>
+          <svg
+            width="46"
+            height="46"
+            viewBox="-56 -56 112 112"
+            aria-hidden="true"
+            style="--c: #d6457b"
+          >
+            <use href="#rose" />
+          </svg>
+          <svg
+            class="ring pointer-events-none absolute inset-0"
+            viewBox="0 0 54 54"
+            aria-hidden="true"
+          >
+            <circle
+              cx="27"
+              cy="27"
+              r="25"
+              fill="none"
+              stroke="#d6457b"
+              stroke-width="3"
+              stroke-linecap="round"
+              pathLength="100"
+              stroke-dasharray="100"
+              stroke-dashoffset="100"
+              transform="rotate(-90 27 27)"
+            />
+          </svg>
+        </button>
         <h1 class="font-display text-3xl md:text-5xl font-bold text-rose-800">
           Aisha Handmade Flowers
         </h1>
       </div>
-      <p class="mt-2 text-rose-800/70 max-w-xl mx-auto">
+      <div
+        class="mx-auto mt-3 h-px w-28 bg-gradient-to-r from-transparent via-amber-400 to-transparent"
+      ></div>
+      <p class="mt-3 text-rose-800/75 max-w-xl mx-auto">
         Design your own bouquet. Every flower is folded by hand from satin
-        ribbon. Pick the size, colors and wrapping, and watch it come together.
+        ribbon.
+      </p>
+      <p class="mt-2 text-xs uppercase tracking-[.18em] text-rose-800/55">
+        Handmade · Made to order · Your colors
       </p>
     </header>
+    <nav aria-label="Progress" class="max-w-6xl mx-auto px-4 pb-4">
+      <ol id="steps" class="grid grid-cols-4 gap-2 text-center text-xs"></ol>
+      <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-rose-100">
+        <div
+          id="bar"
+          class="h-full w-0 rounded-full bg-gradient-to-r from-rose-500 to-amber-400 transition-all duration-500"
+        ></div>
+      </div>
+    </nav>
 
     <main
-      class="max-w-6xl mx-auto px-4 pb-16 grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 items-start"
+      class="max-w-6xl mx-auto px-4 pb-16 flex flex-col lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 lg:items-start"
     >
       <!-- LIVE PREVIEW -->
       <section class="contents lg:block lg:sticky lg:top-4">
         <div
-          class="order-1 rounded-[2rem] bg-gradient-to-b from-rose-100 to-rose-200 p-4 md:p-6"
+          id="prevCard"
+          class="order-1 relative sticky top-0 z-20 lg:static overflow-hidden rounded-[2rem] bg-gradient-to-b from-rose-100 to-rose-200 p-3 md:p-6 shadow-md lg:shadow-none"
         >
           <div
+            id="priceChip"
+            class="absolute left-4 top-4 z-10 rounded-full bg-white/90 px-3 py-1 text-sm font-bold text-rose-600 shadow"
+          >
+            ₱199
+          </div>
+          <div
             id="bouquet"
-            class="aspect-square w-full max-w-[520px] mx-auto"
+            class="aspect-square w-full mx-auto max-w-[32vh] lg:max-w-[520px] cursor-zoom-in lg:cursor-default"
           ></div>
-          <p id="previewNote" class="text-center text-sm text-rose-800/70 mt-1">
-            Preview is a sketch. Your real bouquet is made to order.
+          <p
+            id="previewNote"
+            class="text-center text-xs lg:text-sm text-rose-800/70 mt-1"
+          >
+            <span class="lg:hidden"
+              >Tap the preview to enlarge. It is a sketch.</span
+            ><span class="hidden lg:inline"
+              >Preview is a sketch. Your real bouquet is made to order.</span
+            >
           </p>
         </div>
         <div class="order-3 lg:mt-4 rounded-2xl bg-white p-5 shadow-sm">
@@ -367,7 +800,7 @@
       <section class="order-2 space-y-5">
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            How many flowers?
+            <span class="stp">1</span>How many flowers?
           </h2>
           <div
             id="counts"
@@ -393,28 +826,47 @@
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            Pick up to 2 colors
+            <span class="stp">2</span>Pick up to 2 colors
+            <span
+              class="ml-1 rounded-full bg-rose-100 px-2 py-0.5 align-middle text-xs font-medium text-rose-800"
+              >2nd color is optional</span
+            >
           </h2>
           <p class="text-sm text-rose-800/70">
-            Choose 1 for a single-color bouquet, or 2 for a mix. Cream / Milky
-            White works only as a mix, so pair it with another color.
+            Mixing is optional. Pick 1 color for a single-color bouquet, or 2
+            colors for a mix. Cream / Milky White works only as a mix, so pair
+            it with another color.
           </p>
+          <button
+            id="surprise"
+            type="button"
+            class="mt-3 rounded-full border border-rose-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-rose-50"
+          >
+            ✨ Surprise me
+          </button>
           <div
             id="colors"
             class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2"
           ></div>
+          <p
+            id="colorHint"
+            class="mt-2 text-sm text-rose-800/70"
+            aria-live="polite"
+          ></p>
         </div>
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            Wrapping, ribbon and extras
+            <span class="stp">3</span>Wrapping, ribbon and extras
           </h2>
-          <div id="wraps" class="mt-3 grid grid-cols-3 gap-2"></div>
-          <h3 class="mt-4 text-sm font-bold text-rose-800">Ribbon color</h3>
-          <div
-            id="ribbons"
-            class="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2"
-          ></div>
+          <div id="wraps" class="mt-3 grid grid-cols-2 gap-2"></div>
+          <h3 class="mt-4 text-sm font-bold text-rose-800">Snow dots</h3>
+          <div id="fillers" class="mt-2 grid grid-cols-2 gap-2"></div>
+          <p
+            class="mt-4 rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-800/80"
+          >
+            The ribbon automatically matches the color of your roses.
+          </p>
           <label
             class="opt mt-3 flex items-center gap-3 rounded-xl border border-rose-200 px-3 py-3 cursor-pointer"
           >
@@ -438,7 +890,7 @@
 
         <div class="rounded-2xl bg-white p-5 shadow-sm">
           <h2 class="font-display text-xl font-bold text-rose-800">
-            Your details
+            <span class="stp">4</span>Your details
           </h2>
           <div class="mt-3 grid sm:grid-cols-2 gap-3">
             <div>
@@ -513,6 +965,24 @@
               <label class="text-sm font-medium" for="time">Time</label>
               <input id="time" type="time" class="fld" />
             </div>
+            <div
+              class="sm:col-span-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-3 text-sm text-amber-900"
+            >
+              <p class="font-bold">Order Reminder:</p>
+              <p class="mt-1">
+                🌸 <b>Big Bouquets:</b> Send a chat reminder 5 days before the
+                needed date.
+              </p>
+              <p class="mt-0.5">
+                🌷 <b>3-Ct Bouquets:</b> Send a chat reminder 2 days before the
+                needed date.
+              </p>
+              <p
+                id="remindLine"
+                class="mt-2 font-semibold"
+                aria-live="polite"
+              ></p>
+            </div>
             <div id="addrBox" class="sm:col-span-2 hidden">
               <label class="text-sm font-medium" for="loc"
                 >Delivery address</label
@@ -555,6 +1025,114 @@
     </main>
 
     <div
+      id="gate"
+      class="gate-bg hidden fixed inset-0 z-[60] overflow-hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="gateTitle"
+    >
+      <div
+        class="blob"
+        style="
+          width: 300px;
+          height: 300px;
+          background: #ffc9d9;
+          left: -90px;
+          top: -70px;
+        "
+        aria-hidden="true"
+      ></div>
+      <div
+        class="blob"
+        style="
+          width: 260px;
+          height: 260px;
+          background: #d9c8ff;
+          right: -80px;
+          top: 35%;
+          animation-delay: -5s;
+        "
+        aria-hidden="true"
+      ></div>
+      <div
+        class="blob"
+        style="
+          width: 240px;
+          height: 240px;
+          background: #ffe6a8;
+          left: 10%;
+          bottom: -90px;
+          animation-delay: -9s;
+        "
+        aria-hidden="true"
+      ></div>
+      <div
+        id="petals"
+        class="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="relative z-10 flex h-full items-center justify-center overflow-auto p-5"
+      >
+        <div
+          class="w-full max-w-sm rounded-3xl border border-white/80 bg-white/70 p-6 text-center shadow-xl backdrop-blur-xl"
+        >
+          <svg
+            class="logo mx-auto"
+            width="58"
+            height="58"
+            viewBox="-56 -56 112 112"
+            aria-hidden="true"
+            style="--c: #d6457b"
+          >
+            <use href="#rose" />
+          </svg>
+          <p
+            class="mt-3 text-xs font-bold uppercase tracking-[.2em] text-rose-500"
+          >
+            Aisha Handmade Flowers
+          </p>
+          <h2
+            id="gateTitle"
+            class="mt-2 font-display text-3xl font-bold leading-tight text-rose-800"
+          >
+            Please open this page in your browser
+          </h2>
+          <ol class="mt-5 space-y-3 text-left text-sm">
+            <li class="flex items-start gap-3">
+              <span
+                class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-rose-100 text-xs font-bold text-rose-800"
+                >1</span
+              ><span>Tap <b>⋮</b> or <b>•••</b> in Messenger.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-rose-100 text-xs font-bold text-rose-800"
+                >2</span
+              ><span
+                >Choose <b>Open in browser</b>. On iPhone, choose
+                <b>Open in Safari</b>.</span
+              >
+            </li>
+          </ol>
+          <p class="mt-4 text-xs text-rose-800/60">
+            Messenger's built-in browser cannot save your order image.
+          </p>
+          <a
+            id="gateOpen"
+            class="mt-5 hidden w-full rounded-full bg-rose-800 py-3.5 text-center font-semibold text-white"
+            >Open in browser</a
+          >
+          <button
+            id="gateCopy"
+            class="mt-3 w-full rounded-full border border-rose-800/20 py-3 text-sm font-medium text-rose-800"
+          >
+            Copy page link
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
       id="done"
       class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-3"
       role="dialog"
@@ -562,60 +1140,85 @@
       aria-labelledby="doneTitle"
     >
       <div
-        class="w-full max-w-md max-h-[94vh] overflow-auto rounded-2xl bg-white text-[#3a1424] p-5 shadow-xl"
+        class="w-full max-w-md max-h-[94vh] overflow-auto rounded-3xl bg-white text-[#3a1424] p-5 shadow-xl"
       >
         <h2
           id="doneTitle"
           class="font-display text-2xl font-bold text-rose-800"
         >
-          Your order image is ready
+          Your bouquet is ready to send
         </h2>
-        <p class="text-sm text-rose-800/70 mt-1">
-          1. Save the image. 2. Open Messenger. 3. Send the image and paste your
-          order text. If Save does not work on your phone, press and hold the
-          image.
+        <p class="mt-1 text-sm text-rose-800/70">
+          Three quick steps and your order is with us.
+        </p>
+        <p
+          id="inAppNote"
+          class="hidden mt-3 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900"
+        >
+          You opened this inside Messenger, which blocks saving and sharing
+          files. <b>Press and hold the image below and choose Save image</b>, or
+          take a screenshot of it.
         </p>
         <img
           id="doneImg"
           alt="Your order"
-          class="hidden mt-3 w-full max-h-[48vh] object-contain rounded-lg bg-rose-50"
+          class="hidden mt-3 w-full max-h-[46vh] object-contain rounded-xl bg-rose-50"
+          style="
+            -webkit-touch-callout: default;
+            -webkit-user-select: auto;
+            user-select: auto;
+          "
         />
-        <div class="mt-3 flex gap-2">
-          <button
-            id="saveImg"
-            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
-          >
-            Save image
-          </button>
-          <button
-            id="shareImg"
-            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
-          >
-            Share
-          </button>
-          <button
-            id="closeDone"
-            class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
-          >
-            Close
-          </button>
-        </div>
-        <a
-          id="openM"
-          target="_blank"
-          rel="noopener"
-          class="mt-2 block w-full whitespace-nowrap rounded-xl bg-[#0a7cff] hover:bg-[#0868d6] text-white font-bold py-3.5 text-center"
-          >Open Messenger</a
-        >
+        <ol class="mt-4 space-y-3">
+          <li id="stepSave" class="flex items-center gap-3">
+            <span class="stp">1</span>
+            <div class="flex flex-1 gap-2">
+              <button
+                id="saveImg"
+                class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
+              >
+                Save image
+              </button>
+              <button
+                id="shareImg"
+                class="flex-1 whitespace-nowrap rounded-xl border border-rose-200 px-2 py-3 text-sm font-medium"
+              >
+                Share
+              </button>
+            </div>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="stp">2</span
+            ><a
+              id="openM"
+              target="_blank"
+              rel="noopener"
+              class="block flex-1 whitespace-nowrap rounded-xl bg-[#0a7cff] hover:bg-[#0868d6] py-3.5 text-center font-bold text-white"
+              >Open Messenger</a
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="stp">3</span>
+            <p class="pt-0.5 text-sm">
+              Send the image, then paste your order text. It is already copied.
+            </p>
+          </li>
+        </ol>
         <details class="mt-3">
           <summary class="cursor-pointer text-sm text-rose-600">
-            Show order text (already copied)
+            Show order text
           </summary>
           <pre
             id="doneText"
             class="mt-2 max-h-32 overflow-auto whitespace-pre-wrap rounded-lg bg-rose-50 p-3 text-xs font-sans"
           ></pre>
         </details>
+        <button
+          id="closeDone"
+          class="mt-4 w-full rounded-full border border-rose-200 py-2.5 text-sm font-medium"
+        >
+          Close
+        </button>
       </div>
     </div>
 
@@ -628,7 +1231,7 @@
       const COUNTS = [
         { id: "3", label: "3 pcs", n: 3, price: 199 },
         { id: "6", label: "6 pcs", n: 6, price: 449 },
-        { id: "7", label: "7 pcs", n: 7, price: 649 },
+        { id: "7", label: "7 pcs", n: 7, price: 549 },
         { id: "20", label: "19–20 pcs", n: 20, price: 1399 },
         { id: "x", label: "Other", n: 12, price: null },
       ];
@@ -647,9 +1250,8 @@
         ["Cream / Milky White", "#fff5e4"],
       ];
       const WRAPS = [
-        ["White", "#f4f4f6", "#ffffff"],
-        ["Burgundy", "#8a1c3b", "#3a0c1a"],
-        ["Black sparkle", "#26222b", "#111"],
+        ["White", "#f4f4f6", "#ffffff", 0.4],
+        ["Black sparkle", "#26222b", "#9a94a6", 0.94],
       ];
       const st = { count: COUNTS[0], colors: [], wrap: 0 };
       const $ = (id) => document.getElementById(id);
@@ -683,7 +1285,7 @@
         const l = document.createElement("label");
         l.className =
           "opt flex items-center gap-2 cursor-pointer rounded-xl border border-rose-200 px-3 py-2.5";
-        l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="h-6 w-6 rounded-full shrink-0 border border-black/10" style="background:${hex}"></span><span class="text-sm font-medium leading-tight">${name}</span>`;
+        l.innerHTML = `<input type="checkbox" class="sr-only" value="${i}"><span class="h-8 w-8 rounded-full shrink-0 border border-black/10 shadow-inner" style="background:${hex}"></span><span class="text-sm font-medium leading-tight">${name}</span>`;
         l.querySelector("input").onchange = (e) => {
           if (e.target.checked) st.colors.push(i);
           else st.colors = st.colors.filter((x) => x !== i);
@@ -711,50 +1313,79 @@
 
       // ---------- bouquet drawing (persistent SVG, animated updates) ----------
       const NS = "http://www.w3.org/2000/svg";
+      const FILLERS = [
+        ["White", "#ffffff"],
+        ["Black", "#26222b"],
+      ];
       function petals(cnt, off, rx, ry, rot, cls) {
         let s = "";
         for (let i = 0; i < cnt; i++) {
           s +=
             `<g transform="rotate(${rot + (i * 360) / cnt})"><ellipse cy="${-off}" rx="${rx}" ry="${ry}" class="${cls}"/>` +
             `<path class="ln" d="M${-rx * 0.75} ${-off - ry * 0.45}Q0 ${-off - ry * 1.05} ${rx * 0.75} ${-off - ry * 0.45}"/>` +
-            `<ellipse cx="${-rx * 0.25}" cy="${-off - ry * 0.4}" rx="${rx * 0.4}" ry="${ry * 0.22}" fill="#fff" opacity=".28"/></g>`;
+            `<ellipse cx="${-rx * 0.25}" cy="${-off - ry * 0.4}" rx="${rx * 0.4}" ry="${ry * 0.22}" fill="#fff" opacity=".3"/></g>`;
         }
         return s;
       }
       const ROSE =
-        petals(6, 28, 20, 25, 0, "pa") +
-        petals(5, 17, 15, 19, 18, "pb") +
-        petals(4, 9, 10, 12, 40, "pc") +
-        petals(3, 3.5, 6.5, 7.5, 10, "pd") +
-        `<path class="ln" style="stroke-width:1.4" d="M0 0m-1.5 0a1.5 1.5 0 1 1 3 0a3.5 3.5 0 1 1-7 0a5.5 5.5 0 1 1 11 0a7.5 7.5 0 1 1-15 0"/>` +
-        `<circle r="53" fill="url(#sheen)"/><circle r="53" fill="none" stroke="#000" stroke-opacity=".12"/>`;
-      const BF = `<g class="wing"><path d="M0 0C-8-22-34-24-30-4-28 8-12 8 0 0zM0 0C8-22 34-24 30-4 28 8 12 8 0 0zM0 0C-6 10-22 18-16 28-10 34-2 14 0 0zM0 0C6 10 22 18 16 28 10 34 2 14 0 0z" fill="#2b2233" fill-opacity=".8" stroke="#fff" stroke-opacity=".7"/></g><rect x="-1.2" y="-6" width="2.4" height="20" rx="1.2" fill="#2b2233"/>`;
-      const BFW = `<path d="M0 0C-8-22-34-24-30-4-28 8-12 8 0 0zM0 0C8-22 34-24 30-4 28 8 12 8 0 0zM0 0C-6 10-22 18-16 28-10 34-2 14 0 0zM0 0C6 10 22 18 16 28 10 34 2 14 0 0z" stroke="#fff" stroke-opacity=".7"/>`;
-      const BFB = `<rect x="-1.2" y="-6" width="2.4" height="20" rx="1.2" fill="#2b2233"/>`;
-      const ruffle = (cnt, r, rx, ry, off, op) =>
-        [...Array(cnt)]
+        petals(7, 29, 21, 26, 0, "pa") +
+        petals(6, 19, 16, 20, 22, "pb") +
+        petals(5, 11, 11.5, 14, 40, "pc") +
+        petals(3, 4, 7, 8, 10, "pd") +
+        `<path class="pd" d="M-7 3C-9-7 0-11 7-8C13-4 11 6 3 8C-4 9-9 4-7-1"/>` +
+        `<path class="ln" style="stroke-width:1.4" d="M0 0m-1.5 0a1.5 1.5 0 1 1 3 0a3.5 3.5 0 1 1-7 0a5.5 5.5 0 1 1 11 0"/>` +
+        `<circle r="53" fill="url(#sheen)"/><circle r="53" fill="none" stroke="#000" stroke-opacity=".1"/>`;
+      // lace-paper butterfly
+      const BFW =
+        `<path d="M0 0C-8-22-34-24-30-4-28 8-12 8 0 0zM0 0C8-22 34-24 30-4 28 8 12 8 0 0zM0 0C-6 10-22 18-16 28-10 34-2 14 0 0zM0 0C6 10 22 18 16 28 10 34 2 14 0 0z" stroke-width="1"/>` +
+        `<path d="M0 0L-26-9M0 0L-25 0M0 0L-17 13M0 0L26-9M0 0L25 0M0 0L17 13" fill="none" stroke="currentColor" stroke-width=".9" opacity=".6"/>` +
+        `<g fill="currentColor" opacity=".55">${[
+          [-17, -10, 2.6],
+          [-24, -3, 1.7],
+          [-11, -16, 1.7],
+          [-9, 20, 1.9],
+          [-20, 4, 1.4],
+        ]
           .map(
-            (_, i) =>
-              `<ellipse class="ru" rx="${rx}" ry="${ry}" cy="${-r}" fill="#fff" opacity="${op}" transform="rotate(${(i * 360) / cnt + off})" style="animation-delay:${-(i % 7) * 0.45}s"/>`,
+            ([a, b, c]) =>
+              `<circle cx="${a}" cy="${b}" r="${c}"/><circle cx="${-a}" cy="${b}" r="${c}"/>`,
           )
-          .join("");
+          .join("")}</g>`;
+      const BFB = `<rect x="-1.2" y="-6" width="2.4" height="20" rx="1.2" fill="#6b5a48"/>`;
+      function rng(a) {
+        return () => {
+          a |= 0;
+          a = (a + 0x6d2b79f5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+      const R = rng(7);
+      let DOTS = "";
+      for (let i = 0; i < 620; i++) {
+        const f = i < 500 ? 0.5 + 0.5 * Math.sqrt(R()) : Math.sqrt(R()),
+          a = R() * 6.2832,
+          rr = 1.8 + R() * 2.4;
+        DOTS += `<circle class="d${i % 10 < 6 ? 0 : i % 10 < 9 ? 1 : 2}" cx="${(Math.cos(a) * f * 100).toFixed(1)}" cy="${(Math.sin(a) * f * 100).toFixed(1)}" r="${rr.toFixed(1)}"/>`;
+      }
+      const sheet = (side, rot, cls) =>
+        `<rect class="lf ${cls}" x="${-side / 2}" y="${-side / 2}" width="${side}" height="${side}" rx="10" data-r="${rot}"/>`;
       const bowHalf = `<path class="rb" d="M0 114C-46 78-70 112-34 130C-14 138-2 124 0 114Z"/><path class="rl" d="M0 114C-30 94-46 112-30 124C-16 130-4 122 0 114Z"/>`;
       $("bouquet").innerHTML =
         `<svg id="scene" viewBox="0 0 400 400" role="img" aria-label="Live bouquet preview" class="w-full h-full">
-<defs><radialGradient id="sheen" cx=".32" cy=".28" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></radialGradient>
+<defs><radialGradient id="sheen" cx=".32" cy=".28" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></radialGradient>
 <g id="rose">${ROSE}</g></defs>
 <ellipse id="shadow" cx="200" cy="388" rx="90" ry="7" fill="#5e1631" opacity=".14"/>
 <g id="sway"><g id="wrapG">
-  <g class="tail t1"><path class="rb" d="M0 116C-24 150-30 184-26 208l12-7 7 15C-6 182-4 152 0 116Z"/></g>
-  <g class="tail t2"><path class="rb" d="M0 116C24 150 30 184 26 208l-12-7-7 15C6 182 4 152 0 116Z"/></g>
-  <path class="wa" d="M-36 95L0 195 36 95z"/>
-  ${[...Array(9)].map((_, i) => `<rect class="lf ${i % 2 ? "wa" : "wb"}" x="-105" y="-105" width="210" height="210" rx="46" data-r="${i * 40}"/>`).join("")}
-  ${[...Array(7)].map((_, i) => `<rect class="lf wc" x="-84" y="-84" width="168" height="168" rx="40" data-r="${i * 51 + 20}"/>`).join("")}
-  <circle r="108" class="wa" opacity=".3"/>${ruffle(30, 116, 15, 7, 0, 0.8)}${ruffle(24, 98, 11, 5, 7, 0.6)}
-  <g class="bow"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/></g>
-</g><g id="roses"></g><g id="bfs"></g></g></svg>`;
+  <path class="ws" d="M-38 95L0 198 38 95z"/>
+  ${[0, 30, 60].map((r, i) => sheet(228, r, i % 2 ? "wb" : "wa")).join("")}${[15, 45, 75].map((r) => sheet(196, r, "wb")).join("")}${[0, 45].map((r) => sheet(160, r, "wc")).join("")}
+  <g class="tail t1"><path class="rb" d="M0 116C-26 152-34 186-30 212l13-8 8 16C-6 184-4 152 0 116Z"/></g>
+  <g class="tail t2"><path class="rb" d="M0 116C26 152 34 186 30 212l-13-8-8 16C6 184 4 152 0 116Z"/></g>
+  <g transform="translate(0 115) scale(1.2) translate(0 -115)"><g class="bow"><g>${bowHalf}</g><g transform="scale(-1 1)">${bowHalf}</g><circle class="rl" cy="115" r="8"/></g></g>
+</g><g id="fillG" class="fg"><circle class="fb" r="100"/>${DOTS}</g><g id="roses"></g><g id="bfs"></g></g></svg>`;
 
-      // leaves unfold once on load
+      // wrapping unfolds once on load
       document.querySelectorAll(".lf").forEach((l) => {
         l.style.transform = `rotate(${+l.dataset.r + 50}deg) scale(.15)`;
         l.style.opacity = 0;
@@ -785,10 +1416,10 @@
           pts = [];
         if (n === 1) pts.push([0, 0]);
         else if (n <= 6) {
-          const R = sp / (2 * Math.sin(Math.PI / n));
+          const Rr = sp / (2 * Math.sin(Math.PI / n));
           for (let i = 0; i < n; i++) {
             const a = (i / n) * 6.2832 - 1.5708;
-            pts.push([Math.cos(a) * R, Math.sin(a) * R]);
+            pts.push([Math.cos(a) * Rr, Math.sin(a) * Rr]);
           }
         } else {
           pts.push([0, 0]);
@@ -809,21 +1440,31 @@
       function drawBouquet() {
         const n = qty(),
           w = WRAPS[st.wrap],
-          rbn = RIBBONS[st.ribbon];
+          rbn = RIBBONS[st.ribbon],
+          fl = FILLERS[st.filler];
         const picked = st.colors.length
           ? st.colors.map((i) => COLORS[i][1])
           : ["#f9bcd2"];
         const pts = layout(n),
           ext = Math.max(...pts.map((p) => Math.hypot(p[0], p[1]))) + 1;
-        const r = Math.min(46, 95 / ext),
-          W = Math.max(96, Math.min(150, ext * r * 1.42 + 28)),
-          sc = W / 150,
-          e = ext * r;
+        const r = Math.min(46, 84 / ext),
+          e = ext * r,
+          W = Math.max(96, Math.min(150, e * 1.42 + 30)),
+          sc = W / 150;
         const scene = $("scene");
         scene.style.setProperty("--w1", w[1]);
         scene.style.setProperty("--w2", w[2]);
-        scene.style.setProperty("--rb", rbn[1] || picked[0]);
+        scene.style.setProperty("--wo", w[3]);
+        const rc = st.colors
+          .map((i) => COLORS[i])
+          .find((c) => !c[0].startsWith("Cream"));
+        scene.style.setProperty("--rb", rbn[1] || (rc ? rc[1] : picked[0]));
+        scene.style.setProperty("--fl", fl[1] || "#ffffff");
         $("wrapG").style.transform = `translate(${CX}px,${CY}px) scale(${sc})`;
+        const Rf = Math.min(e + 24, sc * 104);
+        $("fillG").style.transform =
+          `translate(${CX}px,${CY}px) scale(${Rf / 100})`;
+        $("fillG").style.opacity = fl[1] ? 1 : 0;
         $("shadow").setAttribute("rx", 40 + W * 0.6);
         const host = $("roses");
         for (let i = 0; i < Math.max(n, roses.length); i++) {
@@ -866,14 +1507,12 @@
             $("bfs").appendChild(el);
             bfs[k] = el;
           }
-          const wp = el.querySelector(".wing path");
-          wp.setAttribute(
-            "fill",
-            k % 2
-              ? `color-mix(in srgb, ${picked[k % picked.length]} 45%, #fff)`
-              : "#2b2233",
-          );
-          wp.setAttribute("fill-opacity", k % 2 ? 0.85 : 0.8);
+          const wp = el.querySelector(".wing path"),
+            dark = k % 2 === 0;
+          wp.setAttribute("fill", dark ? "#2b2233" : "#fff3e0");
+          wp.setAttribute("fill-opacity", dark ? 0.85 : 0.95);
+          wp.setAttribute("stroke", dark ? "#fff" : "#d9c4a5");
+          el.style.color = dark ? "#ffffff" : "#8a7358";
           const a = -2.2 + k * 2.4,
             d = e * (0.7 + (k % 3) * 0.14);
           el.style.transitionDelay = k * 90 + "ms";
@@ -886,31 +1525,25 @@
       }
 
       // ---------- state, summary, validation ----------
-      const RIBBONS = [
-        ["Match flowers", null],
-        ["White", "#ffffff"],
-        ["Gold", "#d9a441"],
-        ["Burgundy", "#7d1230"],
-        ["Lavender", "#b79be0"],
-        ["Black", "#26222b"],
-      ];
+      const RIBBONS = [["Matches your roses", null]];
       st.ribbon = 0;
       st.ful = "Pick-up";
-      RIBBONS.forEach(([name, hex], i) => {
+      st.filler = 0;
+      FILLERS.forEach(([name, hex], i) => {
         const l = document.createElement("label");
         l.className =
           "opt cursor-pointer rounded-xl border border-rose-200 px-2 py-2.5 text-center text-sm font-medium";
         l.innerHTML =
-          `<input type="radio" name="ribbon" class="sr-only" ${i === 0 ? "checked" : ""}>` +
+          `<input type="radio" name="filler" class="sr-only" ${i === 0 ? "checked" : ""}>` +
           (hex
             ? `<span class="inline-block h-4 w-4 rounded-full border border-black/10 align-middle mr-1" style="background:${hex}"></span>`
-            : "✦ ") +
+            : "") +
           name;
         l.querySelector("input").onchange = () => {
-          st.ribbon = i;
+          st.filler = i;
           render();
         };
-        $("ribbons").appendChild(l);
+        $("fillers").appendChild(l);
       });
       document.querySelectorAll("input[name=ful]").forEach(
         (inp) =>
@@ -939,7 +1572,8 @@
           colors:
             st.colors.map((i) => COLORS[i][0]).join(" + ") || "Not selected",
           wrap: WRAPS[st.wrap][0],
-          ribbon: RIBBONS[st.ribbon][0],
+          ribbon: ribbonName(),
+          filler: FILLERS[st.filler][0],
           bf: $("butterfly").checked ? bfCount(qty()) : 0,
           occasion: $("occasion").value,
           ful: st.ful,
@@ -974,7 +1608,10 @@
         document
           .querySelectorAll("#colors input")
           .forEach(
-            (inp) => (inp.disabled = st.colors.length >= 2 && !inp.checked),
+            (inp) =>
+              (inp.disabled =
+                (st.colors.length >= 2 && !inp.checked) ||
+                OOS.colors.has(COLORS[+inp.value][0])),
           );
         const d = data();
         $("bfNote").textContent = $("butterfly").checked
@@ -985,6 +1622,7 @@
           ["Colors", d.colors],
           ["Wrapping", d.wrap],
           ["Ribbon", d.ribbon],
+          ["Snow dots", d.filler],
           ["Butterflies", d.bf || "None"],
           ["Occasion", d.occasion],
           ["When", [d.date, d.time].filter(Boolean).join(" · ") || "—"],
@@ -998,13 +1636,19 @@
         $("summary").innerHTML = rows
           .map(
             ([k, v]) =>
-              `<div class="flex justify-between gap-4 py-1.5"><dt class="text-rose-800/70">${k}</dt><dd class="font-medium text-right">${String(v).replace(/</g, "&lt;")}</dd></div>`,
+              `<div class="flex justify-between gap-4 py-1.5"><dt class="text-rose-800/70">${k}</dt><dd class="font-medium text-right">${k === "Colors" ? st.colors.map((i) => `<span class="inline-block h-3 w-3 rounded-full border border-black/10 mr-1 align-middle" style="background:${COLORS[i][1]}"></span>`).join("") : ""}${String(v).replace(/</g, "&lt;")}</dd></div>`,
           )
           .join("");
         $("total").textContent = st.count.price
           ? peso(st.count.price)
           : "Quote";
+        $("priceChip").textContent = st.count.price
+          ? peso(st.count.price)
+          : "Custom quote";
         drawBouquet();
+        updateProgress();
+        updateReminder();
+        updateColorHint();
       }
       function orderText() {
         const d = data();
@@ -1018,9 +1662,11 @@
           `Colors: ${d.colors}`,
           `Wrapping: ${d.wrap}`,
           `Ribbon: ${d.ribbon}`,
+          `Snow dots: ${d.filler}`,
           `Butterflies: ${d.bf || "None"}`,
           `${d.ful}: ${d.date}${d.time ? " " + d.time : ""}`,
           d.ful === "Delivery" ? `Address: ${d.loc}` : null,
+          remindDate() ? `Chat reminder date: ${remindDate()}` : null,
           `Price: ${d.price}`,
           d.msg ? `Card message: ${d.msg}` : null,
         ]
@@ -1053,6 +1699,7 @@
           ["Colors", d.colors],
           ["Wrapping", d.wrap],
           ["Ribbon", d.ribbon],
+          ["Snow dots", d.filler],
           ["Butterflies", d.bf || "None"],
           ["When", [d.date, d.time].filter(Boolean).join(" at ") || "—"],
           [
@@ -1170,7 +1817,7 @@
         orderFile = new File([blob], "aisha-bouquet-order.png", {
           type: "image/png",
         });
-        $("doneImg").src = URL.createObjectURL(blob);
+        $("doneImg").src = cv.toDataURL("image/png");
         $("doneImg").classList.remove("hidden");
       }
       function downloadImage() {
@@ -1196,6 +1843,586 @@
           } catch (_) {}
         }
       }
+      // ---------- progress, popular combos, sparkles, tap-to-enlarge ----------
+      st.t1 = false;
+      st.t3 = false;
+      const STEP_NAMES = ["Size", "Colors", "Style", "Details"];
+      function updateProgress() {
+        const d = data(),
+          cOK =
+            st.colors.length >= 1 &&
+            !(
+              st.colors.length === 1 &&
+              COLORS[st.colors[0]][0].startsWith("Cream")
+            );
+        const dOK = !!d.name && !!d.date && (st.ful !== "Delivery" || !!d.loc);
+        const done = [st.t1, cOK, st.t3, dOK];
+        $("steps").innerHTML = done
+          .map(
+            (ok, i) =>
+              `<li class="${ok ? "text-rose-800 font-semibold" : "text-rose-800/55"}"><span class="mx-auto mb-1 grid h-7 w-7 place-items-center rounded-full font-bold ${ok ? "bg-rose-800 text-white" : "bg-rose-100"}">${ok ? "✓" : i + 1}</span>${STEP_NAMES[i]}</li>`,
+          )
+          .join("");
+        $("bar").style.width = done.filter(Boolean).length * 25 + "%";
+      }
+      function sparkle() {
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const host = $("prevCard");
+        for (let i = 0; i < 7; i++) {
+          const sp = document.createElement("span");
+          sp.className = "sp";
+          sp.textContent = "✨";
+          sp.style.left = 15 + Math.random() * 70 + "%";
+          sp.style.top = 20 + Math.random() * 55 + "%";
+          sp.style.fontSize = 12 + Math.random() * 12 + "px";
+          sp.style.animationDelay = i * 60 + "ms";
+          host.appendChild(sp);
+          setTimeout(() => sp.remove(), 1300);
+        }
+      }
+      function setColors(idxs) {
+        st.colors = idxs.slice(0, 2);
+        document
+          .querySelectorAll("#colors input")
+          .forEach((inp) => (inp.checked = st.colors.includes(+inp.value)));
+        render();
+        sparkle();
+      }
+      document.addEventListener("change", (e) => {
+        const t = e.target,
+          n = t.name;
+        if (n === "count") st.t1 = true;
+        if (["wrap", "filler"].includes(n) || t.id === "butterfly")
+          st.t3 = true;
+        if (
+          (t.closest && t.closest("#colors,#counts,#wraps,#fillers")) ||
+          t.id === "butterfly"
+        )
+          sparkle();
+        updateProgress();
+      });
+      $("bouquet").onclick = () => $("bouquet").classList.toggle("exp");
+
+      function ribbonName() {
+        const c =
+          st.colors
+            .map((i) => COLORS[i])
+            .find((x) => !x[0].startsWith("Cream")) ||
+          (st.colors.length ? COLORS[st.colors[0]] : null);
+        return c ? c[0] : "Not selected";
+      }
+      function remindDate() {
+        const v = $("date").value;
+        if (!v) return "";
+        const [y, m, d] = v.split("-").map(Number),
+          days = st.count.id === "3" ? 2 : 5;
+        return new Date(y, m - 1, d - days).toLocaleDateString("en-PH", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+      function updateReminder() {
+        const v = $("date").value;
+        if (!v) {
+          $("remindLine").textContent = "";
+          return;
+        }
+        const [y, m, d] = v.split("-").map(Number),
+          days = st.count.id === "3" ? 2 : 5,
+          r = new Date(y, m - 1, d - days),
+          t = new Date();
+        t.setHours(0, 0, 0, 0);
+        $("remindLine").textContent =
+          r < t
+            ? "Your date is very close. Please message us right after sending your order."
+            : "Your reminder date: " + remindDate();
+      }
+      function updateColorHint() {
+        const n = st.colors.length,
+          cream = n === 1 && COLORS[st.colors[0]][0].startsWith("Cream");
+        $("colorHint").textContent = cream
+          ? "Cream / Milky White must be mixed. Pick one more color."
+          : n === 0
+            ? "Pick a color to begin."
+            : n === 1
+              ? "Single color is perfect. You can also add one more color to mix."
+              : "Mixed: your two colors alternate in the bouquet.";
+      }
+      // ---------- shop stock and price settings (owner panel) ----------
+      const OOS = { colors: new Set(), wraps: new Set(), dots: new Set() };
+      const DEFAULT_PRICES = Object.fromEntries(
+        COUNTS.filter((c) => c.price).map((c) => [c.id, c.price]),
+      );
+      const clone = (o) => JSON.parse(JSON.stringify(o));
+      const arr = (a) =>
+        Array.isArray(a) ? a.filter((x) => typeof x === "string") : [];
+      function normalize(j) {
+        j = j || {};
+        const o = j.out || {},
+          pr = { ...DEFAULT_PRICES };
+        Object.entries(j.prices || {}).forEach(([k, v]) => {
+          if (k in DEFAULT_PRICES && +v > 0) pr[k] = Math.round(+v);
+        });
+        return {
+          prices: pr,
+          out: {
+            colors: arr(o.colors),
+            wraps: arr(o.wraps),
+            dots: arr(o.dots),
+          },
+        };
+      }
+      let settings = normalize(),
+        saved = clone(settings);
+      function fixRadio(sel, key, list, set) {
+        if (set.has(list[st[key]][0])) {
+          const ok = list.findIndex((x) => !set.has(x[0]));
+          if (ok >= 0) {
+            st[key] = ok;
+            document.querySelectorAll(sel + " input")[ok].checked = true;
+          }
+        }
+      }
+      function applyAll() {
+        COUNTS.forEach((c) => {
+          if (c.price && settings.prices[c.id]) c.price = settings.prices[c.id];
+        });
+        document.querySelectorAll("#counts label").forEach((l, i) => {
+          const c = COUNTS[i];
+          l.children[2].textContent = c.price ? peso(c.price) : "Custom";
+        });
+        OOS.colors = new Set(settings.out.colors);
+        OOS.wraps = new Set(settings.out.wraps);
+        OOS.dots = new Set(settings.out.dots);
+        const mark = (sel, names, set) =>
+          document.querySelectorAll(sel + " label").forEach((l, i) => {
+            const out = set.has(names[i]);
+            l.classList.toggle("is-oos", out);
+            if (!l.querySelector(".oosb"))
+              l.insertAdjacentHTML(
+                "beforeend",
+                '<span class="oosb">Out of stock</span>',
+              );
+            const inp = l.querySelector("input");
+            if (out) inp.checked = false;
+            inp.disabled = out;
+          });
+        mark(
+          "#colors",
+          COLORS.map((c) => c[0]),
+          OOS.colors,
+        );
+        mark(
+          "#wraps",
+          WRAPS.map((w) => w[0]),
+          OOS.wraps,
+        );
+        mark(
+          "#fillers",
+          FILLERS.map((f) => f[0]),
+          OOS.dots,
+        );
+        st.colors = st.colors.filter((i) => !OOS.colors.has(COLORS[i][0]));
+        fixRadio("#wraps", "wrap", WRAPS, OOS.wraps);
+        fixRadio("#fillers", "filler", FILLERS, OOS.dots);
+        render();
+      }
+      async function loadSettings() {
+        try {
+          const r = await fetch("settings.json?t=" + Date.now(), {
+            cache: "no-store",
+          });
+          if (r.ok) {
+            settings = normalize(await r.json());
+            saved = clone(settings);
+          }
+        } catch (_) {
+          /* no file yet or offline: everything stays in stock at normal prices */
+        }
+        applyAll();
+      }
+      $("surprise").onclick = () => {
+        const ok = (i) => !OOS.colors.has(COLORS[i][0]),
+          cream = COLORS.findIndex((c) => c[0].startsWith("Cream"));
+        const all = COLORS.map((c, i) => i).filter(ok),
+          pool = all.filter((i) => i !== cream);
+        if (!pool.length) return;
+        const a = pool[Math.floor(Math.random() * pool.length)],
+          others = all.filter((i) => i !== a);
+        setColors(
+          others.length && Math.random() < 0.6
+            ? [a, others[Math.floor(Math.random() * others.length)]]
+            : [a],
+        );
+      };
+
+      // --- encryption helpers: the GitHub token is stored on the owner's phone, locked with the secret code
+      const b64 = (u) => btoa(String.fromCharCode(...u)),
+        unb64 = (t) => Uint8Array.from(atob(t), (c) => c.charCodeAt(0));
+      async function aesKey(code, salt) {
+        const km = await crypto.subtle.importKey(
+          "raw",
+          new TextEncoder().encode(code),
+          "PBKDF2",
+          false,
+          ["deriveKey"],
+        );
+        return crypto.subtle.deriveKey(
+          { name: "PBKDF2", salt, iterations: 200000, hash: "SHA-256" },
+          km,
+          { name: "AES-GCM", length: 256 },
+          false,
+          ["encrypt", "decrypt"],
+        );
+      }
+      async function lockCfg(code, cfg) {
+        const salt = crypto.getRandomValues(new Uint8Array(16)),
+          iv = crypto.getRandomValues(new Uint8Array(12));
+        const ct = await crypto.subtle.encrypt(
+          { name: "AES-GCM", iv },
+          await aesKey(code, salt),
+          new TextEncoder().encode(JSON.stringify(cfg)),
+        );
+        localStorage.setItem(
+          "ahf_admin",
+          JSON.stringify({
+            s: b64(salt),
+            i: b64(iv),
+            d: b64(new Uint8Array(ct)),
+          }),
+        );
+      }
+      async function unlockCfg(code) {
+        try {
+          const o = JSON.parse(localStorage.getItem("ahf_admin"));
+          const pt = await crypto.subtle.decrypt(
+            { name: "AES-GCM", iv: unb64(o.i) },
+            await aesKey(code, unb64(o.s)),
+            unb64(o.d),
+          );
+          return JSON.parse(new TextDecoder().decode(pt));
+        } catch (_) {
+          return null;
+        }
+      }
+      async function publish(cfg) {
+        const base = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path.split("/").map(encodeURIComponent).join("/")}`;
+        const h = {
+          Authorization: "Bearer " + cfg.token,
+          Accept: "application/vnd.github+json",
+        };
+        const fail = (s) =>
+          new Error(
+            s === 401
+              ? "GitHub rejected the token. It may be expired or mistyped."
+              : s === 403
+                ? "The token does not have permission to change this repository."
+                : s === 404
+                  ? "Repository, branch or path not found. Check the setup details."
+                  : "GitHub error " + s + ". Please try again.",
+          );
+        for (let tries = 0; tries < 2; tries++) {
+          let sha;
+          const g = await fetch(
+            base + "?ref=" + encodeURIComponent(cfg.branch),
+            { headers: h },
+          );
+          if (g.ok) sha = (await g.json()).sha;
+          else if (g.status !== 404) throw fail(g.status);
+          const body = {
+            message: "Update shop settings",
+            branch: cfg.branch,
+            content: btoa(
+              unescape(
+                encodeURIComponent(
+                  JSON.stringify(
+                    { ...settings, updated: new Date().toISOString() },
+                    null,
+                    2,
+                  ),
+                ),
+              ),
+            ),
+          };
+          if (sha) body.sha = sha;
+          const r = await fetch(base, {
+            method: "PUT",
+            headers: { ...h, "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          if (r.ok) return;
+          if (r.status !== 409 && r.status !== 422) throw fail(r.status);
+        }
+        throw new Error(
+          "The file changed while saving. Please press Publish again.",
+        );
+      }
+
+      // --- panel interface
+      let adm = null,
+        cfgMem = null,
+        idleT = 0;
+      const dirty = () => JSON.stringify(settings) !== JSON.stringify(saved);
+      const fieldCls =
+        "w-full rounded-xl border border-rose-200 bg-rose-50/40 px-3 py-2.5 text-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200";
+      function shell(sub, body, foot) {
+        adm.innerHTML = `<div class="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-white text-[#3a1424] shadow-2xl">
+    <div class="flex items-center gap-3 border-b border-rose-100 bg-gradient-to-r from-rose-50 to-amber-50 px-5 py-4">
+      <svg width="38" height="38" viewBox="-56 -56 112 112" aria-hidden="true" style="--c:#d6457b"><use href="#rose"/></svg>
+      <div class="flex-1"><h2 class="font-display text-xl font-bold text-rose-800">Shop settings</h2><p class="text-xs text-rose-800/65">${sub}</p></div>
+      <button id="admX" class="grid h-9 w-9 place-items-center rounded-full text-lg text-rose-800 hover:bg-rose-100" aria-label="Close">✕</button></div>
+    <div id="admBody" class="flex-1 overflow-auto px-5 py-4">${body}</div>${foot ? `<div class="border-t border-rose-100 bg-white px-5 py-3">${foot}</div>` : ""}</div>`;
+        $("admX").onclick = () => closeAdmin();
+      }
+      function openAdmin() {
+        if (!adm) {
+          adm = document.createElement("div");
+          adm.className =
+            "fixed inset-0 z-[70] flex items-end justify-center bg-black/50 p-3 sm:items-center";
+          adm.setAttribute("role", "dialog");
+          adm.setAttribute("aria-modal", "true");
+          ["click", "input", "keydown"].forEach((ev) =>
+            adm.addEventListener(ev, bump),
+          );
+          document.body.appendChild(adm);
+        }
+        if (!window.crypto || !crypto.subtle) {
+          shell(
+            "Not available",
+            '<p class="text-sm">The secure panel needs the https version of the page, such as your GitHub Pages link.</p>',
+          );
+          return;
+        }
+        localStorage.getItem("ahf_admin")
+          ? cfgMem
+            ? panel()
+            : lockView()
+          : setupView();
+        bump();
+      }
+      function bump() {
+        clearTimeout(idleT);
+        idleT = setTimeout(() => closeAdmin(true), 300000);
+      }
+      function closeAdmin(force) {
+        if (
+          !force &&
+          cfgMem &&
+          dirty() &&
+          !confirm("You have unpublished changes. Discard them?")
+        )
+          return;
+        settings = clone(saved);
+        applyAll();
+        cfgMem = null;
+        clearTimeout(idleT);
+        if (adm) {
+          adm.remove();
+          adm = null;
+        }
+      }
+      function setupView() {
+        const f = (id, label, val, type = "text", ph = "") =>
+          `<label class="block"><span class="text-xs font-semibold text-rose-800">${label}</span><input id="${id}" type="${type}" value="${val}" placeholder="${ph}" autocomplete="off" class="mt-1 ${fieldCls}"></label>`;
+        shell(
+          "First-time setup",
+          `<p class="mb-3 text-sm text-rose-800/80">Enter your GitHub details once. The token is locked with your secret code and kept only on this phone.</p>
+    <div class="grid gap-3">${f("s_owner", "GitHub username", "Mastery866")}${f("s_repo", "Repository name", "", "text", "e.g. flower-shop")}
+    <div class="grid grid-cols-2 gap-3">${f("s_branch", "Branch", "main")}${f("s_path", "Settings file", "settings.json")}</div>
+    ${f("s_token", "GitHub token", "", "password", "github_pat_…")}${f("s_code", "Choose a secret code (6+ characters)", "", "password")}${f("s_code2", "Repeat the secret code", "", "password")}</div>
+    <details class="mt-3 rounded-xl bg-rose-50 px-3 py-2 text-xs text-rose-800/80"><summary class="cursor-pointer font-semibold">How do I get a token?</summary><ol class="mt-2 list-decimal space-y-1 pl-4"><li>GitHub → your profile → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</li><li>Generate a new token. Under Repository access, choose Only select repositories and pick this one.</li><li>Under Permissions, set Contents to Read and write.</li><li>Copy the token and paste it above.</li></ol></details>
+    <p id="admErr" class="mt-3 hidden rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert"></p>`,
+          '<button id="s_go" class="w-full rounded-full bg-rose-800 py-3 font-semibold text-white">Save setup</button>',
+        );
+        $("s_go").onclick = async () => {
+          const v = (id) => $(id).value.trim(),
+            e = $("admErr"),
+            bad = (m) => {
+              e.textContent = m;
+              e.classList.remove("hidden");
+            };
+          const cfg = {
+            owner: v("s_owner"),
+            repo: v("s_repo"),
+            branch: v("s_branch") || "main",
+            path: v("s_path") || "settings.json",
+            token: v("s_token"),
+          };
+          if (!cfg.owner || !cfg.repo || !cfg.token)
+            return bad("Please fill in the username, repository and token.");
+          if (v("s_code").length < 6)
+            return bad("The secret code needs at least 6 characters.");
+          if (v("s_code") !== v("s_code2"))
+            return bad("The two codes do not match.");
+          await lockCfg(v("s_code"), cfg);
+          cfgMem = cfg;
+          panel();
+        };
+      }
+      function lockView() {
+        const lock = JSON.parse(
+            localStorage.getItem("ahf_lock") || '{"n":0,"until":0}',
+          ),
+          wait = Math.ceil((lock.until - Date.now()) / 1000);
+        shell(
+          "Owner access",
+          `<label class="block"><span class="text-xs font-semibold text-rose-800">Secret code</span><input id="l_code" type="password" autocomplete="off" class="mt-1 ${fieldCls}" ${wait > 0 ? "disabled" : ""}></label>
+    <p id="admErr" class="mt-3 ${wait > 0 ? "" : "hidden"} rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">${wait > 0 ? "Too many tries. Please wait " + wait + " seconds." : ""}</p>
+    <button id="l_reset" class="mt-4 text-xs text-rose-800/60 underline">Forgot the code? Reset setup</button>`,
+          '<button id="l_go" class="w-full rounded-full bg-rose-800 py-3 font-semibold text-white disabled:opacity-50" ' +
+            (wait > 0 ? "disabled" : "") +
+            ">Unlock</button>",
+        );
+        const go = async () => {
+          const e = $("admErr"),
+            cfg = await unlockCfg($("l_code").value);
+          if (cfg) {
+            localStorage.removeItem("ahf_lock");
+            cfgMem = cfg;
+            return panel();
+          }
+          lock.n++;
+          if (lock.n >= 5) {
+            lock.until = Date.now() + 60000;
+            lock.n = 0;
+          }
+          localStorage.setItem("ahf_lock", JSON.stringify(lock));
+          e.textContent =
+            lock.until > Date.now()
+              ? "Too many tries. Please wait a minute."
+              : "That code is not correct.";
+          e.classList.remove("hidden");
+        };
+        $("l_go").onclick = go;
+        if ($("l_code"))
+          $("l_code").onkeydown = (ev) => {
+            if (ev.key === "Enter") go();
+          };
+        $("l_reset").onclick = () => {
+          if (
+            confirm(
+              "This removes the saved GitHub token from this phone. You can set it up again afterwards.",
+            )
+          ) {
+            localStorage.removeItem("ahf_admin");
+            setupView();
+          }
+        };
+      }
+      function panel(msg) {
+        const keep = adm.querySelector("#admBody")
+            ? adm.querySelector("#admBody").scrollTop
+            : 0,
+          n =
+            settings.out.colors.length +
+            settings.out.wraps.length +
+            settings.out.dots.length;
+        const sw = (hex) =>
+          `<span class="inline-block h-5 w-5 shrink-0 rounded-full border border-black/10" style="background:${hex}"></span>`;
+        const row = (kind, name, hex) => {
+          const out = settings.out[kind].includes(name);
+          return `<label class="flex cursor-pointer items-center gap-3 rounded-xl border ${out ? "border-rose-200 bg-rose-50" : "border-rose-100 bg-white"} px-3 py-2.5">${sw(hex)}<span class="flex-1 text-sm font-medium ${out ? "text-rose-800/50 line-through" : ""}">${name}</span>
+      <span class="text-xs font-semibold ${out ? "text-rose-700" : "text-emerald-700"}">${out ? "Out of stock" : "In stock"}</span>
+      <input type="checkbox" class="sr-only" data-k="${kind}" data-n="${name}" ${out ? "" : "checked"}><span class="relative h-6 w-11 shrink-0 rounded-full transition ${out ? "bg-rose-300" : "bg-emerald-500"}"><span class="absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${out ? "left-0.5" : "left-[22px]"}"></span></span></label>`;
+        };
+        const sec = (t, sub, inner) =>
+          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">${t}</h3><p class="mb-2 text-xs text-rose-800/65">${sub}</p><div class="grid gap-2">${inner}</div></section>`;
+        const priceIn = COUNTS.filter((c) => c.price)
+          .map(
+            (c) =>
+              `<label class="block"><span class="text-xs font-semibold text-rose-800">${c.label}</span><div class="relative mt-1"><span class="absolute left-3 top-2.5 text-sm text-rose-800/60">₱</span><input data-p="${c.id}" type="number" min="1" inputmode="numeric" value="${c.price}" class="${fieldCls} pl-7"></div></label>`,
+          )
+          .join("");
+        shell(
+          n
+            ? n + " item" + (n > 1 ? "s" : "") + " out of stock"
+            : "Everything is in stock",
+          `<section class="mb-5"><h3 class="font-display text-lg font-bold text-rose-800">Prices</h3><p class="mb-2 text-xs text-rose-800/65">Sizes stay available. Only the price changes. "Other" is always quoted.</p><div class="grid grid-cols-2 gap-3">${priceIn}</div></section>` +
+            sec(
+              "Colors",
+              "Switch a color off when it runs out. Customers will see an Out of stock label.",
+              COLORS.map((c) => row("colors", c[0], c[1])).join(""),
+            ) +
+            sec(
+              "Wrapping",
+              "Same switch for the wrapping choices.",
+              WRAPS.map((w) => row("wraps", w[0], w[1])).join(""),
+            ) +
+            sec(
+              "Snow dots",
+              "Black or white.",
+              FILLERS.map((f) => row("dots", f[0], f[1])).join(""),
+            ),
+          `<p id="admMsg" class="mb-2 text-sm ${msg && msg.err ? "text-red-700" : "text-emerald-700"} ${msg ? "" : "hidden"}" role="status">${msg ? msg.t : ""}</p>
+     <div class="flex items-center gap-2"><span class="flex-1 text-xs ${dirty() ? "font-semibold text-amber-700" : "text-rose-800/55"}">${dirty() ? "● Unpublished changes" : "All changes published"}</span>
+     <button id="a_out" class="rounded-full border border-rose-200 px-4 py-2.5 text-sm font-medium">Log out</button>
+     <button id="a_pub" class="rounded-full bg-rose-800 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-40" ${dirty() ? "" : "disabled"}>Publish</button></div>`,
+        );
+        $("admBody").scrollTop = keep;
+        adm.querySelectorAll("input[data-k]").forEach(
+          (i) =>
+            (i.onchange = () => {
+              const list = settings.out[i.dataset.k],
+                name = i.dataset.n,
+                at = list.indexOf(name);
+              if (i.checked && at >= 0) list.splice(at, 1);
+              if (!i.checked && at < 0) list.push(name);
+              applyAll();
+              panel();
+            }),
+        );
+        adm.querySelectorAll("input[data-p]").forEach(
+          (i) =>
+            (i.oninput = () => {
+              const v = Math.round(+i.value);
+              if (v > 0) {
+                settings.prices[i.dataset.p] = v;
+                applyAll();
+                $("a_pub").disabled = !dirty();
+              }
+            }),
+        );
+        $("a_out").onclick = () => closeAdmin();
+        $("a_pub").onclick = async () => {
+          const b = $("a_pub");
+          b.disabled = true;
+          b.textContent = "Publishing…";
+          try {
+            await publish(cfgMem);
+            saved = clone(settings);
+            panel({
+              t: "Published. Customers will see the changes in about a minute.",
+            });
+          } catch (e) {
+            panel({
+              t: e.message || "Could not publish. Please try again.",
+              err: 1,
+            });
+          }
+        };
+      }
+      // --- hold the header rose for about 2 seconds to open the panel
+      (function () {
+        const b = $("secretBtn");
+        let t = 0;
+        const stop = () => {
+          clearTimeout(t);
+          b.classList.remove("holding");
+        };
+        b.addEventListener("pointerdown", () => {
+          b.classList.add("holding");
+          t = setTimeout(() => {
+            stop();
+            openAdmin();
+          }, 2200);
+        });
+        ["pointerup", "pointerleave", "pointercancel"].forEach((ev) =>
+          b.addEventListener(ev, stop),
+        );
+        b.addEventListener("contextmenu", (e) => e.preventDefault());
+      })();
+
       const messengerUrl = (t) =>
         "https://m.me/" +
         encodeURIComponent(FB_PAGE) +
@@ -1246,6 +2473,15 @@
             navigator.canShare({ files: [orderFile] })
           ),
         );
+        const inApp = /FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram/i.test(
+          navigator.userAgent,
+        );
+        $("inAppNote").classList.toggle("hidden", !inApp);
+        $("saveImg").classList.toggle("hidden", inApp);
+        $("stepSave").classList.toggle(
+          "hidden",
+          inApp && $("shareImg").classList.contains("hidden"),
+        );
         $("done").classList.remove("hidden");
       };
       $("saveImg").onclick = downloadImage;
@@ -1254,6 +2490,57 @@
       $("done").onclick = (e) => {
         if (e.target === $("done")) $("done").classList.add("hidden");
       };
+      // ---------- Messenger / Facebook in-app browser: require a real browser ----------
+      (function () {
+        const ua = navigator.userAgent;
+        if (!/FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram/i.test(ua)) return;
+        const g = $("gate");
+        g.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+        document.querySelector("main").setAttribute("inert", "");
+        const half =
+          '<g class="wg"><path class="bw1" d="M0 0C-8-22-30-28-28-8C-27 2-10 4 0 0Z"/><path class="bw2" d="M0 2C-6 8-22 12-16 24C-10 30-2 14 0 2Z"/><circle cx="-17" cy="-11" r="2.6" fill="#fff" opacity=".85"/><circle cx="-12" cy="15" r="1.8" fill="#fff" opacity=".7"/><path d="M0 0L-21-15" stroke="#fff" stroke-opacity=".45" fill="none"/></g>';
+        const bfly =
+          half +
+          '<g transform="scale(-1 1)">' +
+          half +
+          '</g><rect x="-1.2" y="-8" width="2.4" height="18" rx="1.2" fill="#3a1424"/><path d="M0-8Q-5-16-9-17M0-8Q5-16 9-17" stroke="#3a1424" fill="none" stroke-width=".9"/>';
+        const cols = [
+          "#d6457b",
+          "#b79be0",
+          "#f4b400",
+          "#7d1230",
+          "#f08cb4",
+          "#7f9cf5",
+        ];
+        $("petals").innerHTML = [...Array(9)]
+          .map(
+            (_, i) =>
+              `<div class="fly f${i % 3}" style="animation-duration:${17 + ((i * 5) % 11)}s;animation-delay:${-(i * 3.1) % 20}s;--b:${cols[i % cols.length]}"><svg class="bob" width="${36 + ((i * 11) % 30)}" height="${36 + ((i * 11) % 30)}" viewBox="-30 -30 60 60" style="--fs:${0.34 + (i % 3) * 0.08}s;animation-delay:${-i * 0.5}s">${bfly}</svg></div>`,
+          )
+          .join("");
+        if (/Android/i.test(ua)) {
+          const u = new URL(location.href);
+          $("gateOpen").href =
+            "intent://" +
+            u.host +
+            u.pathname +
+            u.search +
+            "#Intent;scheme=https;S.browser_fallback_url=" +
+            encodeURIComponent(location.href) +
+            ";end";
+          $("gateOpen").classList.remove("hidden");
+          $("gateOpen").classList.add("block");
+        } else
+          $("gateCopy").className =
+            "mt-5 w-full rounded-full bg-rose-800 py-3.5 font-semibold text-white";
+        $("gateCopy").onclick = async (e) => {
+          await copyText(location.href);
+          e.target.textContent = "Link copied. Paste it in Chrome or Safari.";
+        };
+      })();
+
+      loadSettings();
       render();
     </script>
   </body>
